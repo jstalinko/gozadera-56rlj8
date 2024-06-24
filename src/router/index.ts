@@ -20,12 +20,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab1Page.vue')
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
+        path: 'restaurant',
+        component: () => import('@/views/Restaurant.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'myqr',
+        component: () => import('@/views/MyQr.vue')
+      },
+      {
+        path: 'redeem',
+        component: () => import('@/views/Redeem.vue')
       }
     ]
   }
