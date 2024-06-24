@@ -1,0 +1,8 @@
+{
+  "name": "Gozadera",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite",
+  "id": "3990f1d6"
+}
