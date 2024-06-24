@@ -8,16 +8,16 @@
           <ion-label>Home</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab2" href="/tabs/tab2">
+        <ion-tab-button tab="tab2" href="/tabs/restaurant">
           <ion-icon aria-hidden="true" :icon="restaurantOutline" />
           <ion-label>F & B</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab3" href="/tabs/tab3">
+        <ion-tab-button tab="tab3" href="/tabs/myqr">
           <ion-icon aria-hidden="true" :icon="qrCodeOutline" />
           <ion-label>My QR</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="tab3" href="/tabs/tab3">
+        <ion-tab-button tab="tab3" href="/tabs/redeem">
           <ion-icon aria-hidden="true" :icon="wineOutline" />
           <ion-label>Redeem</ion-label>
         </ion-tab-button>
