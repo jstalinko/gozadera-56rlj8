@@ -37,3 +37,14 @@ http://ionicframework.com/docs/theming/ */
     text-transform: none !important;
     font-size: 11px;
   }
+  .rounded{
+    border-radius: 15px !important;
+  }
+  .text-center{
+    text-align: center;
+  }
+  .bold{
+    font-weight: bold;
+    font-size: 15px;
+  }
+  

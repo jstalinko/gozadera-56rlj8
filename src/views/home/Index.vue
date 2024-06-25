@@ -47,6 +47,38 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+
+
+     <ion-card class="rounded">
+      <ion-card-header>
+        <ion-card-title class="text-center">TOP 10 SPENDER</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list :inset="true" >
+      <ion-item :button="true">
+        <ion-badge class="ion-padding rounded bold"  slot="start">1. </ion-badge>
+        <ion-label>justalinko</ion-label>
+        <ion-badge color="primary" slot="end">VIP</ion-badge>
+      </ion-item>
+      <ion-item :button="true">
+        <ion-badge class="ion-padding rounded bold"  slot="start">1. </ion-badge>
+        <ion-label>justalinko</ion-label>
+        <ion-badge color="primary" slot="end">VIP</ion-badge>
+      </ion-item>
+      <ion-item :button="true">
+        <ion-badge class="ion-padding rounded bold"  slot="start">1. </ion-badge>
+        <ion-label>justalinko</ion-label>
+        <ion-badge color="primary" slot="end">VIP</ion-badge>
+      </ion-item>
+      <ion-item :button="true">
+        <ion-badge class="ion-padding rounded bold"  slot="start">1. </ion-badge>
+        <ion-label>justalinko</ion-label>
+        <ion-badge color="primary" slot="end">VIP</ion-badge>
+      </ion-item>
+    </ion-list>
+      </ion-card-content>
+     </ion-card>
+
     </ion-content>
   </ion-page>
 </template>
@@ -57,9 +89,13 @@ import {
   IonContent,
   IonIcon,
   IonText,
-  IonButton
+  IonButton,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonNote
 } from "@ionic/vue";
-import { beerOutline, cardOutline, mailOpenOutline, mapOutline, ticketOutline, wineOutline } from "ionicons/icons";
+import { beerOutline, cardOutline, mailOpenOutline, mapOutline, ticketOutline, listCircle, peopleCircle, personCircle } from "ionicons/icons";
 </script>
 
 <style scoped>
