@@ -8,11 +8,18 @@
 
         <div class="ion-padding ion-margin">
           <ion-title size="small">Category</ion-title>
-          <div class="flex ion-justify-content-center">
-            <ion-chip color="primary" :outline="true">Food</ion-chip>
-            <ion-chip color="primary" :outline="true">Bevereges</ion-chip>
-            <ion-chip color="primary" :outline="true">Liquor</ion-chip>
-          </div>
+          <ion-segment value="buttons">
+            <ion-segment-button value="food">
+              <ion-label>Food</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="beverages">
+              <ion-label>Beverages</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="liquor">
+              <ion-label>Liquor</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          
           <ion-title size="small">Sort By</ion-title>
           <div class="flex ion-justify-content-center">
             <ion-chip color="primary" :outline="true">Food</ion-chip>
@@ -26,10 +33,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -43,10 +47,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -60,10 +61,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -77,10 +75,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
