@@ -4,7 +4,7 @@
       <h1 class="text-center">My QR</h1>
       <ion-card style="background-color: #fff">
         <ion-card-content>
-          <ion-img src="../../../resources/qrcode.png"></ion-img>
+          <ion-img src="/qrcode.png"></ion-img>
         </ion-card-content>
       </ion-card>
     </ion-content>

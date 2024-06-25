@@ -48,14 +48,14 @@ http://ionicframework.com/docs/theming/ */
   font-weight: bold;
   font-size: 15px;
 }
-.goza-area {
+/* .goza-area {
   border-radius: 100px !important;
   background-color: var(--ion-color-primary);
   padding: 13px;
   color: #fff;
   width: 90%;
   max-width: 96%;
-}
+} */
 
 .br-1 {
   border-right: 1px solid #ddd;
