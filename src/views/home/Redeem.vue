@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content class="ion-padding">
       <div>Redeem content</div>
     </ion-content>
   </ion-page>

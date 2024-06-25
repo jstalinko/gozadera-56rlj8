@@ -1,6 +1,6 @@
 .PHONY: flash
 
-dev-andro:
+dev-android:
 	ionic build && \
 	ionic cap copy && \
 	ionic capacitor sync android && \
