@@ -31,6 +31,20 @@
 </template>
 
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import {  square, homeOutline, restaurantOutline, qrCodeOutline, wineOutline, personOutline } from 'ionicons/icons';
+import {
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  IonLabel,
+  IonIcon,
+  IonPage,
+  IonRouterOutlet,
+} from "@ionic/vue";
+import {
+  homeOutline,
+  restaurantOutline,
+  qrCodeOutline,
+  wineOutline,
+  personOutline,
+} from "ionicons/icons";
 </script>
