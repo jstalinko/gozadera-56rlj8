@@ -5,31 +5,34 @@
         <ion-toolbar>
           <ion-title>Menu F & B</ion-title>
         </ion-toolbar>
-
-        <div class="ion-padding ion-margin">
-          <ion-title size="small">Category</ion-title>
-          <div class="flex ion-justify-content-center">
-            <ion-chip color="primary" :outline="true">Food</ion-chip>
-            <ion-chip color="primary" :outline="true">Bevereges</ion-chip>
-            <ion-chip color="primary" :outline="true">Liquor</ion-chip>
-          </div>
-          <ion-title size="small">Sort By</ion-title>
-          <div class="flex ion-justify-content-center">
-            <ion-chip color="primary" :outline="true">Food</ion-chip>
-            <ion-chip color="primary" :outline="true">Bevereges</ion-chip>
-            <ion-chip color="primary" :outline="true">Liquor</ion-chip>
-          </div>
-        </div>
       </ion-header>
 
+      <div class="ion-padding" style="margin-top: 20px;">
+         
+          <ion-segment value="buttons">
+            <ion-segment-button value="food" >
+              <ion-label>Food</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="beverages">
+              <ion-label>Beverages</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="liquor">
+              <ion-label>Liquor</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <br>
+        
+          <div class="flex ion-justify-content-center">
+            <ion-chip color="primary" :outline="true">Main Course</ion-chip>
+            <ion-chip color="primary" :outline="true">Bite Platter</ion-chip>
+            <ion-chip color="primary" :outline="true">Steak</ion-chip>
+          </div>
+        </div>
       <ion-grid>
         <ion-row>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -43,10 +46,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -60,10 +60,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -77,10 +74,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
               <ion-card-header>
                 <ion-card-title>Card Title</ion-card-title>
                 <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -110,5 +104,8 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel
 } from "@ionic/vue";
 </script>
