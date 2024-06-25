@@ -2,22 +2,31 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Tab 3</ion-title>
+        <ion-title>Profile</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Tab 3</ion-title>
+          <ion-title size="large">Profile</ion-title>
         </ion-toolbar>
       </ion-header>
-
-      <ExploreContainer name="Tab 3 page" />
+      
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title class="text-center">Profile</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-img src="../../../resources/icon.png" />
+          <br>
+          <ion-input></ion-input>
+        </ion-card-content>
+      </ion-card>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+
 </script>

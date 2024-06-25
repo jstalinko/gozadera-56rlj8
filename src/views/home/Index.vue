@@ -22,25 +22,25 @@
       <ion-grid class="flex flex-col flex-wrap align-items-center">
         <ion-row>
           <ion-col>
-            <ion-button color="primary" class="text-reset">
+            <ion-button color="primary" class="text-reset" href="/home/my-bottles">
               <ion-icon :icon="beerOutline" size="large"></ion-icon>
               <ion-text>My Bottles</ion-text>
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="primary" class="text-reset">
+            <ion-button color="primary" class="text-reset" href="/home/my-tickets">
               <ion-icon :icon="ticketOutline" size="large"></ion-icon>
               My Tickets
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="primary" class="text-reset">
+            <ion-button color="primary" class="text-reset" href="/home/outlets">
               <ion-icon :icon="mailOpenOutline" size="large"></ion-icon>
               RSVP
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button color="primary" class="text-reset">
+            <ion-button color="primary" class="text-reset" href="/home/outlets">
               <ion-icon :icon="mapOutline" size="large"></ion-icon>
               Outlet
             </ion-button>
