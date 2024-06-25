@@ -4,7 +4,7 @@ import { RouteRecordRaw } from "vue-router";
 import TabsLayout from '@/views/home/TabsLayout.vue';
 
 
-const isAuthenticated: boolean = false; // demo 
+const isAuthenticated: boolean = true; // demo 
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -67,7 +67,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "profile",
-        component: () => import('@/views/home/Redeem.vue')
+        component: () => import('@/views/home/Profile.vue')
       }
     ]
   },
