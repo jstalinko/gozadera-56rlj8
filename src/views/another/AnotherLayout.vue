@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
         <ion-title>New Item</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -14,8 +11,6 @@
 
 <script setup lang="ts">
 import {
-  IonBackButton,
-  IonButtons,
   IonRouterOutlet,
   IonHeader,
   IonPage,

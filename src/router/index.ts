@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 
 import { RouteRecordRaw } from 'vue-router';
+import TabsLayout from '@/views/home/TabsLayout.vue';
 
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */
@@ -12,11 +13,15 @@ const routes: Array<RouteRecordRaw> = [
   /* ---------------------------------- Home ---------------------------------- */
   {
     path: '/home/',
-    component: () => import("@/views/home/TabsLayout.vue"),
+    component: TabsLayout,
     children: [
       {
         path: '',
-        component: () => import('@/views/home/Home.vue')
+        redirect: "/home/index"
+      },
+      {
+        path: 'index',
+        component: () => import('@/views/home/Index.vue')
       },
       {
         path: 'restaurant',
@@ -28,6 +33,10 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'redeem',
+        component: () => import('@/views/home/Redeem.vue')
+      },
+      {
+        path: "profile",
         component: () => import('@/views/home/Redeem.vue')
       }
     ]
