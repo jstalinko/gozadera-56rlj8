@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content class="ion-padding ion-margin">
       <h1 class="text-center">My QR</h1>
-      <ion-card style="background-color: #fff;">
+      <ion-card style="background-color: #fff">
         <ion-card-content>
           <ion-img src="../../../resources/qrcode.png"></ion-img>
         </ion-card-content>
