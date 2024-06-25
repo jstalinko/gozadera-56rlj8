@@ -35,6 +35,7 @@ const routes: Array<RouteRecordRaw> = [
   /* --------------------------------- Another -------------------------------- */
   {
     path: "/another",
+    component: () => import("@/views/another/AnotherLayout.vue"),
     children: [
       {
         path: "",

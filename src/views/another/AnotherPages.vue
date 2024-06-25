@@ -1,25 +1,9 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>New Item</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content></ion-content>
-  </ion-page>
+  <ion-content class="ion-padding">
+    <h1>Content</h1>
+  </ion-content>
 </template>
 
 <script setup lang="ts">
-import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/vue";
+import { IonContent } from "@ionic/vue";
 </script>
