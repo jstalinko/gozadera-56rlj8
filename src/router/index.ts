@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 import { RouteRecordRaw } from "vue-router";
 import TabsLayout from "@/views/home/TabsLayout.vue";
+import { tokenExist } from "@/composables/storage";
 
-const isAuthenticated: boolean = true; // demo
+const isAuthenticated: boolean = await tokenExist(); // demo
 
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */

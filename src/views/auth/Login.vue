@@ -14,6 +14,7 @@
           label-placement="floating"
           fill="solid"
           placeholder="Your email"
+          v-model="email"
         ></ion-input>
         <br />
         <ion-input
@@ -21,15 +22,16 @@
           label-placement="floating"
           fill="solid"
           placeholder="Your password"
+          v-model="password"
         ></ion-input>
         <br />
-        <ion-button>Login</ion-button>
+        <ion-button type="button" @click="submitLogin">Login</ion-button>
       </form>
       <ion-grid>
         <ion-row>
           <ion-col size="4">
             <ion-button
-              rel="button"
+              type="button"
               color="primary"
               fill="clear"
               expland="block"
@@ -39,7 +41,7 @@
           </ion-col>
           <ion-col size="8">
             <ion-button
-              rel="button"
+              type="button"
               color="secondary"
               fill="clear"
               expand="block"
@@ -54,5 +56,50 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonButton, IonInput, IonTitle } from "@ionic/vue";
+import {
+  IonPage,
+  IonContent,
+  IonButton,
+  IonInput,
+  IonTitle,
+  IonToast,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  toastController,
+  useIonRouter,
+} from "@ionic/vue";
+import { ref } from "vue";
+import { doLogin } from "@/composables/Http";
+import { setToken } from "@/composables/storage";
+const email = ref("");
+const password = ref("");
+const ionRouter = useIonRouter();
+
+const submitLogin = async () => {
+  const login: any = await doLogin(email.value, password.value);
+
+  let toastConfig: any;
+  if (login.data.code == 200) {
+    await setToken(login.data.token);
+    toastConfig = {
+      message: "Welcome! successfully login to your account",
+      duration: 1500,
+      position: "bottom",
+      color: "success",
+    };
+    return ionRouter.push("/home/index");
+  } else {
+    toastConfig = {
+      message: "Wrong email or password !",
+      duration: 1500,
+      position: "bottom",
+      color: "danger",
+    };
+  }
+
+  const toast = await toastController.create(toastConfig);
+  await toast.present();
+};
 </script>
