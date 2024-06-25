@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 import { RouteRecordRaw } from "vue-router";
-import TabsLayout from '@/views/home/TabsLayout.vue';
+import TabsLayout from "@/views/home/TabsLayout.vue";
 
-
-const isAuthenticated: boolean = true; // demo 
-
+const isAuthenticated: boolean = true; // demo
 
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */
@@ -41,17 +39,17 @@ const routes: Array<RouteRecordRaw> = [
   },
   /* ---------------------------------- Home ---------------------------------- */
   {
-    path: '/home/',
+    path: "/home/",
     component: TabsLayout,
     children: [
       {
-        path: '',
-        redirect: "/home/index"
+        path: "",
+        redirect: "/home/index",
       },
       {
-        path: 'index',
+        path: "index",
         name: "Home",
-        component: () => import('@/views/home/Index.vue')
+        component: () => import("@/views/home/Index.vue"),
       },
       {
         path: "restaurant",
@@ -62,26 +60,26 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/home/MyQr.vue"),
       },
       {
-        path: 'redeem',
-        component: () => import('@/views/home/Redeem.vue')
+        path: "redeem",
+        component: () => import("@/views/home/Redeem.vue"),
       },
       {
         path: "profile",
-        component: () => import('@/views/home/Profile.vue')
+        component: () => import("@/views/home/Profile.vue"),
       },
       {
         path: "my-bottles",
-        component: () => import("@/views/home/MyBottles.vue")
+        component: () => import("@/views/home/MyBottles.vue"),
       },
       {
         path: "my-tickets",
-        component: () => import("@/views/home/MyTickets.vue")
+        component: () => import("@/views/home/MyTickets.vue"),
       },
       {
         path: "outlets",
-        component: () => import("@/views/home/Outlets.vue")
-      }
-    ]
+        component: () => import("@/views/home/Outlets.vue"),
+      },
+    ],
   },
   /* --------------------------------- Another -------------------------------- */
   {
