@@ -95,24 +95,5 @@ import {
   IonLabel,
   IonNote
 } from "@ionic/vue";
-import { beerOutline, cardOutline, mailOpenOutline, mapOutline, ticketOutline, listCircle, peopleCircle, personCircle } from "ionicons/icons";
+import { beerOutline, cardOutline, mailOpenOutline, mapOutline, ticketOutline } from "ionicons/icons";
 </script>
-
-<style scoped>
-.goza-area {
-  border-radius: 100px !important;
-  background-color: var(--ion-color-primary);
-  padding: 13px;
-  color: #fff;
-  width: 90%;
-  max-width: 96%;
-}
-
-.br-1 {
-  border-right: 1px solid #ddd;
-}
-
-.bl-1 {
-  border-left: 1px solid #ddd;
-}
-</style>
