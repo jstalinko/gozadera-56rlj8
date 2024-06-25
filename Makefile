@@ -11,3 +11,6 @@ dev-ios:
 	ionic cap copy && \
 	ionic capacitor sync ios && \
 	ionic cap open ios
+
+dev-web:
+	ionic serve
