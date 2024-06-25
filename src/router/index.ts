@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 import { RouteRecordRaw } from "vue-router";
+import TabsLayout from '@/views/home/TabsLayout.vue';
+
 
 const isAuthenticated: boolean = false; // demo 
+
 
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */
@@ -38,13 +41,17 @@ const routes: Array<RouteRecordRaw> = [
   },
   /* ---------------------------------- Home ---------------------------------- */
   {
-    path: "/home/",
-    component: () => import("@/views/home/TabsLayout.vue"),
+    path: '/home/',
+    component: TabsLayout,
     children: [
       {
-        path: "",
+        path: '',
+        redirect: "/home/index"
+      },
+      {
+        path: 'index',
         name: "Home",
-        component: () => import("@/views/home/Home.vue"),
+        component: () => import('@/views/home/Index.vue')
       },
       {
         path: "restaurant",
@@ -55,10 +62,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/home/MyQr.vue"),
       },
       {
-        path: "redeem",
-        component: () => import("@/views/home/Redeem.vue"),
+        path: 'redeem',
+        component: () => import('@/views/home/Redeem.vue')
       },
-    ],
+      {
+        path: "profile",
+        component: () => import('@/views/home/Redeem.vue')
+      }
+    ]
   },
   /* --------------------------------- Another -------------------------------- */
   {
