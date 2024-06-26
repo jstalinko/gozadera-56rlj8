@@ -28,7 +28,7 @@
             </ion-item>
             <ion-item>
               <ion-icon :icon="speedometerOutline" slot="start"></ion-icon>
-              <ion-label>{{ profile.level }}</ion-label>
+              <ion-label>{{ profile.level }} ( Level )</ion-label>
             </ion-item>
             <ion-item>
               <ion-icon :icon="cardOutline" slot="start"></ion-icon>
@@ -39,7 +39,7 @@
         </ion-row>
       </ion-grid>
       
-      <ion-button color="danger" expand="full" @click="doLogout"><ion-icon :icon="logOutOutline"></ion-icon>  Logout</ion-button> 
+      <ion-button color="danger" type="button" expand="full" @click="doLogout"><ion-icon :icon="logOutOutline"></ion-icon>  Logout</ion-button> 
     </ion-content>
   </ion-page>
 </template>
@@ -83,7 +83,7 @@ const xProfile = async() => {
 }
 const doLogout = async() => {
   await clearStorage();
-  return router.push('/auth/login');
+  window.location.href = '/auth/login';
 }
 
 

@@ -91,7 +91,8 @@ const submitLogin = async () => {
       position: "bottom",
       color: "success",
     };
-      window.location.href = '/home/index';
+  window.location.href = '/home/index';
+
   } else {
     toastConfig = {
       message: "Wrong email or password !",
@@ -103,5 +104,8 @@ const submitLogin = async () => {
 
   const toast = await toastController.create(toastConfig);
   await toast.present();
+
+  
+
 };
 </script>
