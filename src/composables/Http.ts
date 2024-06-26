@@ -1,6 +1,21 @@
 import { CapacitorHttp, HttpResponse } from "@capacitor/core";
 import { useAppConfig } from "./AppConfig";
+import { getToken } from "./storage";
 const config = useAppConfig();
+
+export const _TOKEN = await getToken();
+export const HEADERS = {
+  auth:  {
+    "Content-Type": "application/json",
+    "User-Agent": "@GozaderaApp",
+     Authorization: `Bearer ${_TOKEN}`
+  },
+  basic: {
+    "Content-Type": "application/json",
+    "User-Agent": "@GozaderaApp",
+  }
+};
+
 
 /*--------------------------- apiGet ------------------------------*/
 
@@ -31,10 +46,7 @@ export const apiPost = async (path: any , data: any, options: any) => {
 /*--------------------------- doLogin ------------------------------*/
 export const doLogin = async (email: string, password: string) => {
   let options = {
-    headers: {
-      "Content-Type": "application/json",
-      "User-Agent": "@GozaderaApp",
-    },
+    headers: HEADERS.basic
   };
 
   const response = await apiPost(
@@ -45,3 +57,15 @@ export const doLogin = async (email: string, password: string) => {
 
   return response;
 };
+
+/*-------------------------- Get product by category ----------------- */
+export const getProductByCategory = async(category: string) => {
+  
+  let options = {
+    headers: HEADERS.auth
+  };
+  const response: any = await apiGet(`category/${category}` , options);
+
+  return response;
+
+}
