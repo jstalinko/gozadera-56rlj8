@@ -6,7 +6,7 @@
         style="width: 120px; height: 150px; margin: 0 auto"
       />
       <h4 class="ion-text-center">Welcome , Sonata !</h4>
-      <ion-grid :fixed="true" class="py-3 rounded-full">
+      <ion-grid :fixed="true" class="pye rounded-full">
         <ion-row>
           <ion-col
             class="br-1"
@@ -25,7 +25,7 @@
                   size-lg="12"
                   size-xl="12"
                 >
-                  My Bottles
+                  Level
                 </ion-col>
                 <ion-col
                   class="count"
@@ -35,8 +35,8 @@
                   size-lg="12"
                   size-xl="12"
                 >
-                  <ion-icon :icon="beerOutline" />
-                  123
+                  <ion-icon :icon="speedometerOutline" />
+                  {{ profile.level ?? 'Basic' }}
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -58,7 +58,7 @@
                   size-lg="12"
                   size-xl="12"
                 >
-                  My Bottles
+                  My Points
                 </ion-col>
                 <ion-col
                   class="count"
@@ -69,7 +69,8 @@
                   size-xl="12"
                 >
                   <ion-icon :icon="cardOutline" />
-                  123
+                  {{ profile.point ?? 0 }}
+               
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -180,24 +181,56 @@ import {
   IonCol,
   IonGrid,
   IonRow,
-  // IonNote
+  IonImg,
+  IonCardHeader,
+  IonCard,
+  IonBadge,
+  IonCardContent,
+  IonCardTitle
 } from "@ionic/vue";
 import {
   beerOutline,
   cardOutline,
   mailOpenOutline,
   mapOutline,
+  speedometerOutline,
   ticketOutline,
 } from "ionicons/icons";
+import {ref,onMounted} from 'vue';
+import {getProfile} from "@/composables/Http";
+import {clearStorage,setStore} from "@/composables/storage";
+import { Loading } from "@/composables/Utils";
+
+const profile:any = ref({});
+
+const xProfile: any = async() => {
+  await Loading(1500,"Please wait ...");
+  let response:any = await getProfile();
+  if(response.data.code == 200)
+  {
+    await setStore('_myqrcode',response.data.data.qrcode);
+    delete response.data.data.qrcode;
+    profile.value = response.data.data;
+  }else{
+    await clearStorage();
+    return '/';
+  }
+
+}
+
+onMounted(async () => {
+  await xProfile();
+});
+
 </script>
 
 <style scoped lang="scss">
 ion-grid {
   // --ion-grid-columns: 2;
   background-color: var(--ion-color-primary);
-  &.py-3 {
-    padding-top: 12px;
-    padding-bottom: 12px;
+  &.pye {
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
   &.rounded-full {
     border-radius: 999px;

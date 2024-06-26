@@ -37,7 +37,7 @@
         <ion-row>
           <ion-col size="6" v-for="(pr, index) in products" :key="index">
             <ion-card>
-              <img :alt="pr.name" :src="pr.image" />
+              <img :alt="pr.name" :src="imageUrl(pr.image)" />
               <ion-card-header>
                 <ion-card-title>{{ pr.name }}</ion-card-title>
                 <ion-card-subtitle color="primary"> {{ pr.sub_category ? pr.sub_category.replace('_', ' ').replace('_', ' ').toUpperCase() : pr.category.toUpperCase() }}</ion-card-subtitle>
@@ -71,6 +71,8 @@ import {
 } from "@ionic/vue";
 import { ref, onMounted } from 'vue';
 import { getProductByCategory } from '@/composables/Http';
+import {imageUrl , Loading} from '@/composables/Utils';
+
 const filterCategory = ref('food');
 const filterSubCategory = ref('');
 const products: any = ref([]);
@@ -89,6 +91,7 @@ const changeCategory = async () => {
   await getProduct();
 }
 const getProduct = async () => {
+  await Loading(2000, "Please wait ...");
   let response: any = await getProductByCategory(filterCategory.value);
   if (response.data.code == 200) {
     products.value = response.data.data;
@@ -96,6 +99,7 @@ const getProduct = async () => {
   } else {
     console.log(response);
   }
+
 }
 onMounted(async () => {
   await getProduct();

@@ -8,88 +8,60 @@
       </ion-header>
 
       <div class="ion-padding" style="margin-top: 20px">
-        <ion-segment value="buttons">
-          <ion-segment-button value="food">
+        <ion-segment value="buttons" v-model="activeTab">
+          <ion-segment-button value="redeem">
             <ion-label>Redeem</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="beverages">
+          <ion-segment-button value="history">
             <ion-label>History</ion-label>
           </ion-segment-button>
         </ion-segment>
         <br />
       </div>
-      <ion-grid>
+      <ion-grid v-if="activeTab == 'redeem'">
         <ion-row>
-          <ion-col size="6">
+          <ion-col size="6" v-for="(red, index) in redeemables" :key="index">
             <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
+              <img :alt="red.product.name" :src="imageUrl(red.product.image)" />
               <ion-card-header>
-                <ion-card-title>Card Title</ion-card-title>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                <ion-card-title>{{ red.product.name }}</ion-card-title>
+                <ion-card-subtitle color="primary">{{ red.point }} Points</ion-card-subtitle>
               </ion-card-header>
-
               <ion-card-content>
-                Here's a small text description for the card content. Nothing
-                more, nothing less.
+                <ion-button expand="block" color="primary">
+                  <ion-icon :icon="heartCircle"></ion-icon>
+                  Redeem</ion-button>
               </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6">
-            <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
-              <ion-card-header>
-                <ion-card-title>Card Title</ion-card-title>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-              </ion-card-header>
 
-              <ion-card-content>
-                Here's a small text description for the card content. Nothing
-                more, nothing less.
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6">
-            <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
-              <ion-card-header>
-                <ion-card-title>Card Title</ion-card-title>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-              </ion-card-header>
-
-              <ion-card-content>
-                Here's a small text description for the card content. Nothing
-                more, nothing less.
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6">
-            <ion-card>
-              <img
-                alt="Silhouette of mountains"
-                src="https://ionicframework.com/docs/img/demos/card-media.png"
-              />
-              <ion-card-header>
-                <ion-card-title>Card Title</ion-card-title>
-                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-              </ion-card-header>
-
-              <ion-card-content>
-                Here's a small text description for the card content. Nothing
-                more, nothing less.
-              </ion-card-content>
             </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <div v-if="activeTab == 'history'">
+        
+        <NoData v-if="redeemHistories.length < 1"  :message="'Redeem your point to get special offers from us!'" />
+
+      <ion-list :inset="true" v-if="redeemHistories.length > 0">
+        <ion-item v-for="(hist,index) in redeemHistories" :key="index">
+          <div class="unread-indicator-wrapper" slot="start">
+            <div class="unread-indicator"></div>
+          </div>
+          <ion-label>
+            <strong>Rick Astley</strong><br>
+            <ion-text>Never Gonna Give You Up</ion-text><br>
+            <ion-note color="medium" class="ion-text-wrap">
+              Never gonna give you up Never gonna let you down Never gonna run...
+            </ion-note>
+          </ion-label>
+          <div class="metadata-end-wrapper" slot="end">
+            <ion-note color="medium">06:11</ion-note>
+            <ion-icon color="medium" :icon="heartCircle"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
     </ion-content>
   </ion-page>
 </template>
@@ -102,12 +74,60 @@ import {
   IonTitle,
   IonContent,
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonSegment,
   IonSegmentButton,
   IonLabel,
+  IonIcon,
+  IonButton,
+  IonCardContent,
+  IonItem,
+  IonNote,
+  IonText,
+  IonList,
+  IonGrid,
+  IonRow,
+  IonCol
 } from "@ionic/vue";
+import { ref, onMounted, watch } from 'vue';
+import { getRedeemables, getRedeemHistory } from "@/composables/Http";
+import { Loading, imageUrl } from "@/composables/Utils";
+import { heartCircle } from "ionicons/icons";
+import NoData from '@/components/NoData.vue';
+
+const redeemables: any = ref([]);
+const redeemHistories: any = ref([]);
+const activeTab: any = ref('redeem');
+
+watch(activeTab, async () => {
+  if (activeTab.value == 'redeem') {
+    await getProductRedeem();
+  } else if (activeTab.value == 'history') {
+    await getRedeemHist();
+  }
+});
+
+const getProductRedeem = async () => {
+  await Loading(1600, "Please wait ...");
+  let response: any = await getRedeemables();
+  if (response.data.code == 200) {
+    redeemables.value = response.data.data;
+  } else {
+
+  }
+}
+const getRedeemHist = async () => {
+  await Loading(1500, "Please wait ...");
+  let response: any = await getRedeemHistory();
+  if (response.data.code == 200) {
+    redeemHistories.value = response.data.data;
+  }
+  console.log(response.data.data);
+}
+
+onMounted(async () => {
+  await getProductRedeem();
+});
 </script>

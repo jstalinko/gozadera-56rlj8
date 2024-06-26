@@ -1,5 +1,6 @@
 export const useAppConfig = () => {
   return {
-    apiUrl: "http://localhost:8000/api/",
+    apiUrl: "https://gozadera-backend.fotografersukasuka.com/api/",
+    storageUrl: "https://gozadera-backend.fotografersukasuka.com/storage/"
   };
 };

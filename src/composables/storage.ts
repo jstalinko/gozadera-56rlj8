@@ -20,4 +20,14 @@ export const setToken = async (token: string) => {
     return await store.set('_token',token);
 }
 
+export const clearStorage = async() => {
+    return await store.clear();
+}
+export const setStore = async (key: any,value: any) => {
+    return await store.set(key,value);
+}
+export const getStore = async(key: any) => {
+    return await store.get(key);
+}
+
 export default store;
