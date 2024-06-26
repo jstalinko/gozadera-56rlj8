@@ -6,7 +6,7 @@
         src="/icon.png"
         style="width: 120px; height: 150px; margin: 0 auto"
       />
-      <h4 class="ion-text-center">Welcome , Sonata !</h4>
+      <h4 class="ion-text-center">Welcome , {{ profile.username }} !</h4>
       <ion-grid :fixed="true" class="pye rounded-full">
         <ion-row>
           <ion-col

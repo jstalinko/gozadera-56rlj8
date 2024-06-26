@@ -14,6 +14,7 @@
           label-placement="floating"
           fill="solid"
           placeholder="Your email"
+          v-model="email"
         ></ion-input>
         <br />
         <ion-input
@@ -21,6 +22,7 @@
           label-placement="floating"
           fill="solid"
           placeholder="Your username"
+          v-model="username"
         ></ion-input>
         <br />
         <ion-input
@@ -28,9 +30,10 @@
           label-placement="floating"
           fill="solid"
           placeholder="Your whatsapp number"
+          v-model="phone"
         ></ion-input>
         <br />
-        <ion-button>Register</ion-button>
+        <ion-button type="button" @click="actionRegister">Register</ion-button>
       </form>
       <ion-grid>
         <ion-row>
@@ -59,5 +62,32 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonButton, IonInput, IonTitle } from "@ionic/vue";
+import { IonPage, IonContent, IonButton, IonInput, IonTitle, toastController } from "@ionic/vue";
+import {ref} from "vue";
+import { doRegister } from "@/composables/Http";
+const username = ref('');
+const email = ref('');
+const phone = ref('');
+
+const actionRegister = async() => {
+  let resp: any = await doRegister(email.value , username.value , phone.value);
+  let toasConfig: any;
+  if(resp.data.code == 200)
+  {
+    toasConfig = {
+      duration:5000,
+      message:'Successfully register! Check your whatsapp to get your account details.',
+      color:'success'
+    }
+  }else{
+    toasConfig = {
+      duration:3000,
+      message: 'Failed to register, please try again later.',
+      color:'danger'
+    }
+  }
+
+  (await toastController.create(toasConfig)).present();
+}
+
 </script>

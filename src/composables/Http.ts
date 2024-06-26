@@ -56,6 +56,33 @@ export const doLogin = async (email: string, password: string) => {
   return response;
 };
 
+/*-------------------------- doRegister --------------------------- */
+export const doRegister = async (
+  email: string,
+  username: string,
+  phone: any
+) => {
+  const response = await apiPost(
+    `register`,
+    {
+      email: email,
+      username: username,
+      phone: phone,
+    },
+    { headers: HEADERS.basic }
+  );
+
+  return response;
+};
+
+/*------------------------ doResetPassword ------------------------*/
+export const doResetPassword = async(phone: any) => {
+  const response = await apiPost(`forgot-password` , {phone: phone} , {headers: HEADERS.basic });
+
+  return response;
+
+}
+
 /*-------------------------- Get product by category ----------------- */
 export const getProductByCategory = async (category: string) => {
   let options = {
@@ -78,7 +105,9 @@ export const doRedeem = async (product_id: number, redeem_id: number) =>
     { headers: HEADERS.auth }
   );
 /*------------------------- Redeem History ---------------------*/
-export const getRedeemHistory = async() => await apiGet(`redeem-history` , {headers: HEADERS.auth});
+export const getRedeemHistory = async () =>
+  await apiGet(`redeem-history`, { headers: HEADERS.auth });
 
 /*------------------------- get Profile ------------------------*/
-export const getProfile = async() => await apiGet(`profile`,{headers:HEADERS.auth});
+export const getProfile = async () =>
+  await apiGet(`profile`, { headers: HEADERS.auth });
