@@ -11,14 +11,14 @@
           <ion-title size="large">Profile</ion-title>
         </ion-toolbar>
       </ion-header>
-      
+
       <ion-card>
         <ion-card-header>
           <ion-card-title class="text-center">Profile</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-img src="../../../resources/icon.png" />
-          <br>
+          <ion-img src="/icon.png" />
+          <br />
           <ion-input></ion-input>
         </ion-card-content>
       </ion-card>
@@ -27,6 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+} from "@ionic/vue";
 </script>
