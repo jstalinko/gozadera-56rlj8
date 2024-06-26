@@ -1,16 +1,16 @@
 .PHONY: flash
 
 dev-android:
-	ionic build && \
-	ionic cap copy && \
-	ionic capacitor sync android && \
-	ionic cap open android
+	npx ionic build && \
+	npx ionic cap copy && \
+	npx ionic capacitor sync android && \
+	npx ionic cap open android
 
 dev-ios:
-	ionic build && \
-	ionic cap copy && \
-	ionic capacitor sync ios && \
-	ionic cap open ios
+	npx ionic build && \
+	npx ionic cap copy && \
+	npx ionic capacitor sync ios && \
+	npx ionic cap open ios
 
 dev-web:
-	ionic serve
+	npx ionic serve
