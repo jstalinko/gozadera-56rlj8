@@ -1,0 +1,54 @@
+{
+    "new-content" : {
+        "prefix": "/new-page-content",
+        "scope": "vue",
+        "body": [
+			"<template>",
+			"  <ion-page>",
+			"    <ion-content class=\"ion-padding\">",
+			"      <div>Piye tol kontol</div>",
+			"    </ion-content>",
+			"  </ion-page>",
+			"</template>",
+			"",
+			"<script lang=\"ts\" setup>",
+			"import { IonContent, IonPage } from \"@ionic/vue\";",
+			"</script>"
+		] 
+    },
+	"new-page" : {
+        "prefix": "/new-content",
+        "scope": "vue",
+        "body": [
+			"<template>",
+			"  <ion-content class=\"ion-padding\">",
+			"    <div>Piye tol kontol</div>",
+			"  </ion-content>",
+			"</template>",
+			"",
+			"<script lang=\"ts\" setup>",
+			"import { IonContent } from \"@ionic/vue\";",
+			"</script>"
+		] 
+    },
+	"new-layout" : {
+        "prefix": "/new-layout",
+        "scope": "vue",
+        "body": [
+			"<template>",
+			"  <ion-page>",
+			"    <ion-header>",
+			"      <ion-toolbar>",
+			"        <ion-title>New Item</ion-title>",
+			"      </ion-toolbar>",
+			"    </ion-header>",
+			"    <ion-router-outlet />",
+			"  </ion-page>",
+			"</template>",
+			"",
+			"<script lang=\"ts\" setup>",
+			"import { IonRouterOutlet, IonHeader, IonPage, IonTitle, IonToolbar } from \"@ionic/vue\";",
+			"</script>"
+		] 
+    }
+}
