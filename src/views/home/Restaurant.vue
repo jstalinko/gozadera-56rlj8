@@ -67,7 +67,8 @@ import {
   IonLabel,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonChip
 } from "@ionic/vue";
 import { ref, onMounted } from 'vue';
 import { getProductByCategory } from '@/composables/Http';

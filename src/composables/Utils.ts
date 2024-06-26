@@ -15,12 +15,16 @@ export const currencyIDR = (amount: any) => {
 };
 
 export const imageUrl = (imagePath: string) => {
-  if (!imagePath.match(/^http/)) {
-    let storageUrl = useAppConfig().storageUrl;
-    return storageUrl + imagePath;
-  } else {
-    return imagePath;
-  }
+  let config = useAppConfig();
+  if(imagePath !== undefined)
+    {
+      if(!imagePath.match(/^http/))
+        {
+          return config.storageUrl + imagePath;
+        }
+    }
+  
+  return imagePath;
 };
 
 

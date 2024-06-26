@@ -1,6 +1,7 @@
 <template>
-  <ion-page>
+  <ion-page>    
     <ion-content>
+      
       <ion-img
         src="/icon.png"
         style="width: 120px; height: 150px; margin: 0 auto"
@@ -186,7 +187,8 @@ import {
   IonCard,
   IonBadge,
   IonCardContent,
-  IonCardTitle
+  IonCardTitle,
+useIonRouter
 } from "@ionic/vue";
 import {
   beerOutline,
@@ -202,6 +204,7 @@ import {clearStorage,setStore} from "@/composables/storage";
 import { Loading } from "@/composables/Utils";
 
 const profile:any = ref({});
+
 
 const xProfile: any = async() => {
   await Loading(1500,"Please wait ...");

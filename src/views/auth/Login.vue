@@ -18,6 +18,7 @@
         ></ion-input>
         <br />
         <ion-input
+          type="password"
           label="Password"
           label-placement="floating"
           fill="solid"
@@ -62,7 +63,6 @@ import {
   IonButton,
   IonInput,
   IonTitle,
-  IonToast,
   IonGrid,
   IonRow,
   IonCol,
@@ -73,11 +73,13 @@ import {
 import { ref } from "vue";
 import { doLogin } from "@/composables/Http";
 import { setToken } from "@/composables/storage";
+import { Loading } from "@/composables/Utils";
 const email = ref("");
 const password = ref("");
-const ionRouter = useIonRouter();
+const router = useIonRouter();
 
 const submitLogin = async () => {
+  await Loading(1400,"Please wait...");
   const login: any = await doLogin(email.value, password.value);
 
   let toastConfig: any;
@@ -89,7 +91,7 @@ const submitLogin = async () => {
       position: "bottom",
       color: "success",
     };
-    return ionRouter.push("/home/index");
+      window.location.href = '/home/index';
   } else {
     toastConfig = {
       message: "Wrong email or password !",

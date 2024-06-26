@@ -1,6 +1,6 @@
 <template>
   <ion-app>
-    <PullToRefresh />
+     
     <ion-router-outlet />
   </ion-app>
 </template>

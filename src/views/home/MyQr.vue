@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonContent, IonPage,IonCard,IonCardContent,IonImg } from "@ionic/vue";
+import { IonContent, IonPage,IonCard,IonCardContent,IonImg,IonText } from "@ionic/vue";
 import { getStore } from "@/composables/storage";
 import { onMounted,ref } from "vue";
 const myqrcode = ref('');
