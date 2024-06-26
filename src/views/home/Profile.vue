@@ -11,35 +11,37 @@
           <ion-title size="large">Profile</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-grid >
+      <ion-grid>
         <ion-row>
-          <ion-col size="4">
-            <ion-img :src="imageUrl(profile.image)" ></ion-img>
+          <ion-col size="12">
+            <ion-img :src="imageUrl(profile.image)"></ion-img>
           </ion-col>
-          <ion-col size="8">
-           <ion-list>
-            <ion-item>
-              <ion-icon :icon="personCircleOutline" slot="start"></ion-icon>
-              <ion-label>{{ profile.username }}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon :icon="mailOpenOutline" slot="start"></ion-icon>
-              <ion-label>{{ profile.email }}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon :icon="speedometerOutline" slot="start"></ion-icon>
-              <ion-label>{{ profile.level }} ( Level )</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon :icon="cardOutline" slot="start"></ion-icon>
-              <ion-label>{{ profile.point }} Point</ion-label>
-            </ion-item>
-           </ion-list>
+          <ion-col size="12">
+            <ion-list>
+              <ion-item>
+                <ion-icon :icon="personCircleOutline" slot="start"></ion-icon>
+                <ion-label>{{ profile.username }}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon :icon="mailOpenOutline" slot="start"></ion-icon>
+                <ion-label>{{ profile.email }}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon :icon="speedometerOutline" slot="start"></ion-icon>
+                <ion-label>{{ profile.level }} ( Level )</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon :icon="cardOutline" slot="start"></ion-icon>
+                <ion-label>{{ profile.point }} Point</ion-label>
+              </ion-item>
+            </ion-list>
           </ion-col>
         </ion-row>
       </ion-grid>
-      
-      <ion-button color="danger" type="button" expand="full" @click="doLogout"><ion-icon :icon="logOutOutline"></ion-icon>  Logout</ion-button> 
+
+      <ion-button color="danger" type="button" expand="full" @click="doLogout"
+        ><ion-icon :icon="logOutOutline"></ion-icon> Logout</ion-button
+      >
     </ion-content>
   </ion-page>
 </template>
@@ -60,34 +62,38 @@ import {
   IonButton,
   IonIcon,
   IonImg,
-useIonRouter
+  useIonRouter,
 } from "@ionic/vue";
-import { cardOutline, logOutOutline, mailOpenOutline, personCircleOutline, speedometerOutline } from "ionicons/icons";
+import {
+  cardOutline,
+  logOutOutline,
+  mailOpenOutline,
+  personCircleOutline,
+  speedometerOutline,
+} from "ionicons/icons";
 import { clearStorage } from "@/composables/storage";
 import { getProfile } from "@/composables/Http";
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { imageUrl } from "@/composables/Utils";
 
 const router = useIonRouter();
 const profile: any = ref({});
 
-const xProfile = async() => {
+const xProfile = async () => {
   let response: any = await getProfile();
-  if(response.data.code == 200)
-  {
+  if (response.data.code == 200) {
     delete response.data.data.qrcode;
     profile.value = response.data.data;
-  }else{
+  } else {
     await doLogout();
   }
-}
-const doLogout = async() => {
+};
+const doLogout = async () => {
   await clearStorage();
-  window.location.href = '/auth/login';
-}
-
+  window.location.href = "/auth/login";
+};
 
 onMounted(async () => {
-  await xProfile();
-})
+  // await xProfile();
+});
 </script>

@@ -100,21 +100,21 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
-  let targetToRoute: any = to.name;
-  if (isAuthenticated) {
-    if (guestGuardRouteNamed.includes(targetToRoute)) {
-      next({ name: "Home" });
-    } else {
-      next();
-    }
-  } else {
-    if (guestGuardRouteNamed.includes(targetToRoute)) {
-      next();
-    } else {
-      next({ name: "Login" });
-    }
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
+//   let targetToRoute: any = to.name;
+//   if (isAuthenticated) {
+//     if (guestGuardRouteNamed.includes(targetToRoute)) {
+//       next({ name: "Home" });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     if (guestGuardRouteNamed.includes(targetToRoute)) {
+//       next();
+//     } else {
+//       next({ name: "Login" });
+//     }
+//   }
+// });
 export default router;

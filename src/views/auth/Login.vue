@@ -79,7 +79,7 @@ const password = ref("");
 const router = useIonRouter();
 
 const submitLogin = async () => {
-  await Loading(1400,"Please wait...");
+  await Loading(1400, "Please wait...");
   const login: any = await doLogin(email.value, password.value);
 
   let toastConfig: any;
@@ -91,8 +91,7 @@ const submitLogin = async () => {
       position: "bottom",
       color: "success",
     };
-  window.location.href = '/home/index';
-
+    window.location.href = "/home/index";
   } else {
     toastConfig = {
       message: "Wrong email or password !",
@@ -104,8 +103,5 @@ const submitLogin = async () => {
 
   const toast = await toastController.create(toastConfig);
   await toast.present();
-
-  
-
 };
 </script>
