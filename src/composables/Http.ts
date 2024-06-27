@@ -3,17 +3,25 @@ import { useAppConfig } from "./AppConfig";
 import { getToken } from "./storage";
 const config = useAppConfig();
 
-export const _TOKEN = await getToken();
-export const HEADERS = {
-  auth: {
-    "Content-Type": "application/json",
-    "User-Agent": "@GozaderaApp",
-    Authorization: `Bearer ${_TOKEN}`,
-  },
-  basic: {
-    "Content-Type": "application/json",
-    "User-Agent": "@GozaderaApp",
-  },
+export const HEADERS = async () => {
+  async function compile() {
+    const _TOKEN = await getToken();
+
+  return {
+    auth: {
+      "Content-Type": "application/json",
+      "User-Agent": "@GozaderaApp",
+      Authorization: `Bearer ${_TOKEN}`,
+    },
+    basic: {
+      "Content-Type": "application/json",
+      "User-Agent": "@GozaderaApp",
+    },
+  }
+  }
+
+  const {auth, basic} = await compile()
+  return {auth, basic}
 };
 
 /*--------------------------- apiGet ------------------------------*/
@@ -44,7 +52,7 @@ export const apiPost = async (path: any, data: any, options: any) => {
 /*--------------------------- doLogin ------------------------------*/
 export const doLogin = async (email: string, password: string) => {
   let options = {
-    headers: HEADERS.basic,
+    headers: (await HEADERS()).basic,
   };
 
   const response = await apiPost(
@@ -69,7 +77,7 @@ export const doRegister = async (
       username: username,
       phone: phone,
     },
-    { headers: HEADERS.basic }
+    { headers: (await HEADERS()).basic }
   );
 
   return response;
@@ -77,7 +85,7 @@ export const doRegister = async (
 
 /*------------------------ doResetPassword ------------------------*/
 export const doResetPassword = async(phone: any) => {
-  const response = await apiPost(`forgot-password` , {phone: phone} , {headers: HEADERS.basic });
+  const response = await apiPost(`forgot-password` , {phone: phone} , {headers: (await HEADERS()).basic });
 
   return response;
 
@@ -86,7 +94,7 @@ export const doResetPassword = async(phone: any) => {
 /*-------------------------- Get product by category ----------------- */
 export const getProductByCategory = async (category: string) => {
   let options = {
-    headers: HEADERS.auth,
+    headers: (await HEADERS()).auth,
   };
   const response: any = await apiGet(`category/${category}`, options);
 
@@ -95,19 +103,19 @@ export const getProductByCategory = async (category: string) => {
 
 /*-------------------------- Get product Redeemables ----------------- */
 export const getRedeemables = async () =>
-  await apiGet(`product-redeemables`, { headers: HEADERS.auth });
+  await apiGet(`product-redeemables`, { headers: (await HEADERS()).auth });
 
 /*-------------------------- Redeem Product ----------------- */
 export const doRedeem = async (product_id: number, redeem_id: number) =>
   await apiPost(
     `redeem`,
     { product_id: product_id, redeem_id: redeem_id },
-    { headers: HEADERS.auth }
+    { headers: (await HEADERS()).auth }
   );
 /*------------------------- Redeem History ---------------------*/
 export const getRedeemHistory = async () =>
-  await apiGet(`redeem-history`, { headers: HEADERS.auth });
+  await apiGet(`redeem-history`, { headers: (await HEADERS()).auth });
 
 /*------------------------- get Profile ------------------------*/
 export const getProfile = async () =>
-  await apiGet(`profile`, { headers: HEADERS.auth });
+  await apiGet(`profile`, { headers: (await HEADERS()).auth });
