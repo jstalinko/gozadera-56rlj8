@@ -1,7 +1,6 @@
 <template>
-  <ion-page>    
+  <ion-page>
     <ion-content>
-      
       <ion-img
         src="/icon.png"
         style="width: 120px; height: 150px; margin: 0 auto"
@@ -37,7 +36,7 @@
                   size-xl="12"
                 >
                   <ion-icon :icon="speedometerOutline" />
-                  {{ profile.level ?? 'Basic' }}
+                  {{ profile.level ?? "Basic" }}
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -71,7 +70,6 @@
                 >
                   <ion-icon :icon="cardOutline" />
                   {{ profile.point ?? 0 }}
-               
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -128,6 +126,18 @@
         </ion-row>
       </ion-grid>
 
+      <swiper
+        :modules="[Autoplay, Navigation, Keyboard, Zoom]"
+        :navigation="true"
+        :keyboard="true"
+        :autoplay="true"
+        :zoom="true"
+      >
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+      </swiper>
+
       <ion-card class="rounded">
         <ion-card-header>
           <ion-card-title class="text-center">TOP 10 SPENDER</ion-card-title>
@@ -135,29 +145,29 @@
         <ion-card-content>
           <ion-list :inset="true">
             <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start"
-                >1.
+              <ion-badge class="ion-padding rounded bold" slot="start">
+                1.
               </ion-badge>
               <ion-label>justalinko</ion-label>
               <ion-badge color="primary" slot="end">VIP</ion-badge>
             </ion-item>
             <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start"
-                >1.
+              <ion-badge class="ion-padding rounded bold" slot="start">
+                1.
               </ion-badge>
               <ion-label>justalinko</ion-label>
               <ion-badge color="primary" slot="end">VIP</ion-badge>
             </ion-item>
             <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start"
-                >1.
+              <ion-badge class="ion-padding rounded bold" slot="start">
+                1.
               </ion-badge>
               <ion-label>justalinko</ion-label>
               <ion-badge color="primary" slot="end">VIP</ion-badge>
             </ion-item>
             <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start"
-                >1.
+              <ion-badge class="ion-padding rounded bold" slot="start">
+                1.
               </ion-badge>
               <ion-label>justalinko</ion-label>
               <ion-badge color="primary" slot="end">VIP</ion-badge>
@@ -188,7 +198,6 @@ import {
   IonBadge,
   IonCardContent,
   IonCardTitle,
-useIonRouter
 } from "@ionic/vue";
 import {
   beerOutline,
@@ -198,33 +207,31 @@ import {
   speedometerOutline,
   ticketOutline,
 } from "ionicons/icons";
-import {ref,onMounted} from 'vue';
-import {getProfile} from "@/composables/Http";
-import {clearStorage,setStore} from "@/composables/storage";
+import { Autoplay, Keyboard, Navigation, Zoom } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { ref, onMounted } from "vue";
+import { getProfile } from "@/composables/Http";
+import { clearStorage, setStore } from "@/composables/storage";
 import { Loading } from "@/composables/Utils";
 
-const profile:any = ref({});
+const profile: any = ref({});
 
-
-const xProfile: any = async() => {
-  await Loading(1500,"Please wait ...");
-  let response:any = await getProfile();
-  if(response.data.code == 200)
-  {
-    await setStore('_myqrcode',response.data.data.qrcode);
+const xProfile: any = async () => {
+  await Loading(1500, "Please wait ...");
+  let response: any = await getProfile();
+  if (response.data.code == 200) {
+    await setStore("_myqrcode", response.data.data.qrcode);
     delete response.data.data.qrcode;
     profile.value = response.data.data;
-  }else{
+  } else {
     await clearStorage();
-    return '/';
+    return "/";
   }
-
-}
+};
 
 onMounted(async () => {
   await xProfile();
 });
-
 </script>
 
 <style scoped lang="scss">
