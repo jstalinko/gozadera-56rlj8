@@ -14,6 +14,7 @@ import "@ionic/vue/css/display.css";
 import "@ionic/vue/css/palettes/dark.always.css";
 /* Theme variables */
 import "./theme/variables.css";
+import "./theme/global.scss";
 import "@ionic/vue/css/palettes/dark.always.css";
 /* SwiperJS */
 import "swiper/css";

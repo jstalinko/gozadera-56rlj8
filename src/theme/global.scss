@@ -1,0 +1,23 @@
+.swiper {
+  &-slide {
+    img {
+      padding: 0.25rem;
+      background-color: #d49000;
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  &-button {
+    &-prev {
+      color: var(--ion-color-primary) !important;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+    }
+    &-next {
+      color: var(--ion-color-primary) !important;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+    }
+  }
+}

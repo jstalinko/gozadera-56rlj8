@@ -1,142 +1,12 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-img
-        src="/icon.png"
-        style="width: 120px; height: 150px; margin: 0 auto"
-      />
-      <h4 class="ion-text-center">Welcome , {{ profile.username }} !</h4>
-      <ion-grid :fixed="true" class="pye rounded-full">
-        <ion-row>
-          <ion-col
-            class="br-1"
-            size="6"
-            size-sm="6"
-            size-md="6"
-            size-lg="6"
-            size-xl="6"
-          >
-            <ion-grid :fixed="true" class="transparent">
-              <ion-row>
-                <ion-col
-                  size="12"
-                  size-sm="12"
-                  size-md="12"
-                  size-lg="12"
-                  size-xl="12"
-                >
-                  Level
-                </ion-col>
-                <ion-col
-                  class="count"
-                  size="12"
-                  size-sm="12"
-                  size-md="12"
-                  size-lg="12"
-                  size-xl="12"
-                >
-                  <ion-icon :icon="speedometerOutline" />
-                  {{ profile.level ?? "Basic" }}
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-col>
-          <ion-col
-            class="bl-1"
-            size="6"
-            size-sm="6"
-            size-md="6"
-            size-lg="6"
-            size-xl="6"
-          >
-            <ion-grid :fixed="true" class="transparent">
-              <ion-row>
-                <ion-col
-                  size="12"
-                  size-sm="12"
-                  size-md="12"
-                  size-lg="12"
-                  size-xl="12"
-                >
-                  My Points
-                </ion-col>
-                <ion-col
-                  class="count"
-                  size="12"
-                  size-sm="12"
-                  size-md="12"
-                  size-lg="12"
-                  size-xl="12"
-                >
-                  <ion-icon :icon="cardOutline" />
-                  {{ profile.point ?? 0 }}
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <Header :username="profile.username" />
+      <HeaderInfo :level="profile.level" :point="profile.point" />
 
-      <ion-grid :fixed="true" class="transparent">
-        <ion-row>
-          <ion-col size="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
-            <ion-button
-              expand="block"
-              color="primary"
-              class="text-reset"
-              href="/home/my-bottles"
-            >
-              <ion-icon :icon="beerOutline"></ion-icon>
-              <ion-text>Bottles</ion-text>
-            </ion-button>
-          </ion-col>
-          <ion-col size="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
-            <ion-button
-              expand="block"
-              color="primary"
-              class="text-reset"
-              href="/home/my-tickets"
-            >
-              <ion-icon :icon="ticketOutline"></ion-icon>
-              Tickets
-            </ion-button>
-          </ion-col>
-          <ion-col size="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
-            <ion-button
-              expand="block"
-              color="primary"
-              class="text-reset"
-              href="/home/outlets"
-            >
-              <ion-icon :icon="mailOpenOutline"></ion-icon>
-              RSVP
-            </ion-button>
-          </ion-col>
-          <ion-col size="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
-            <ion-button
-              expand="block"
-              color="primary"
-              class="text-reset"
-              href="/home/outlets"
-            >
-              <ion-icon :icon="mapOutline"></ion-icon>
-              Outlet
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <NewsCarousel />
 
-      <swiper
-        :modules="[Autoplay, Navigation, Keyboard, Zoom]"
-        :navigation="true"
-        :keyboard="true"
-        :autoplay="true"
-        :zoom="true"
-      >
-        <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-      </swiper>
+      <Offers />
 
       <ion-card class="rounded">
         <ion-card-header>
@@ -183,32 +53,20 @@
 import {
   IonPage,
   IonContent,
-  IonIcon,
-  IonText,
-  IonButton,
   IonList,
   IonItem,
   IonLabel,
-  IonCol,
-  IonGrid,
-  IonRow,
-  IonImg,
   IonCardHeader,
   IonCard,
   IonBadge,
   IonCardContent,
   IonCardTitle,
 } from "@ionic/vue";
-import {
-  beerOutline,
-  cardOutline,
-  mailOpenOutline,
-  mapOutline,
-  speedometerOutline,
-  ticketOutline,
-} from "ionicons/icons";
-import { Autoplay, Keyboard, Navigation, Zoom } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
+
+import Header from "./components/index/Header.vue";
+import HeaderInfo from "./components/index/HeaderInfo.vue";
+import NewsCarousel from "./components/index/NewsCarousel.vue";
+import Offers from "./components/index/Offers.vue";
 import { ref, onMounted } from "vue";
 import { getProfile } from "@/composables/Http";
 import { clearStorage, setStore } from "@/composables/storage";
@@ -218,7 +76,7 @@ const profile: any = ref({});
 
 const xProfile: any = async () => {
   await Loading(1500, "Please wait ...");
-  let response: any = await getProfile();
+  const response: any = await getProfile();
   if (response.data.code == 200) {
     await setStore("_myqrcode", response.data.data.qrcode);
     delete response.data.data.qrcode;
@@ -234,22 +92,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped lang="scss">
-ion-grid {
-  // --ion-grid-columns: 2;
-  background-color: var(--ion-color-primary);
-  &.pye {
-    padding-top: 6px;
-    padding-bottom: 6px;
-  }
-  &.rounded-full {
-    border-radius: 999px;
-  }
-  &.transparent {
-    background-color: transparent;
-  }
-}
-
+<!-- <style scoped lang="scss">
 ion-col {
   text-align: center;
   &.count {
@@ -259,5 +102,8 @@ ion-col {
     align-items: center;
     gap: 0.5rem;
   }
+  &.align-start {
+    text-align: start;
+  }
 }
-</style>
+</style> -->

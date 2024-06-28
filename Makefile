@@ -9,7 +9,7 @@ dev-android:
 dev-ios:
 	npx ionic build && \
 	npx ionic cap copy && \
-	npx ionic capacitor sync ios && \
+	npx ionic capacitor sync ios
 	npx ionic cap open ios -l --external
 
 dev-web:
