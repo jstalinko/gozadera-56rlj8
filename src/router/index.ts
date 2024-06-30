@@ -82,17 +82,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  /* --------------------------------- Another -------------------------------- */
-  {
-    path: "/another",
-    component: () => import("@/views/another/AnotherLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("@/views/another/AnotherPages.vue"),
-      },
-    ],
-  },
 ];
 
 const router = createRouter({
