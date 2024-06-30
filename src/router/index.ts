@@ -4,8 +4,6 @@ import { RouteRecordRaw } from "vue-router";
 import TabsLayout from "@/views/home/TabsLayout.vue";
 import { tokenExist } from "@/composables/storage";
 
-// const isAuthenticated: boolean = await tokenExist(); // demo
-
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */
   {
@@ -100,9 +98,10 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
-//   let targetToRoute: any = to.name;
+// router.beforeEach(async (to, from, next) => {
+//   const isAuthenticated: boolean = await tokenExist();
+//   const guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
+//   const targetToRoute: any = to.name;
 //   if (isAuthenticated) {
 //     if (guestGuardRouteNamed.includes(targetToRoute)) {
 //       next({ name: "Home" });

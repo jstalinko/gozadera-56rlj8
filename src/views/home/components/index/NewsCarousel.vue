@@ -9,7 +9,7 @@
         size-xl="12"
         class="align-start"
       >
-        <h4>Whats New</h4>
+        <h4 class="bold">Whats New</h4>
       </ion-col>
       <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
         <swiper
