@@ -145,6 +145,13 @@ ion-title {
   }
 }
 
+ion-card {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  margin-right: 0;
+  margin-left: 0;
+}
+
 ion-card-title {
   &.ios,
   &.md {
