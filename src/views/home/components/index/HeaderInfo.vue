@@ -79,7 +79,7 @@
           class="text-reset"
           href="/home/my-bottles"
         >
-          <ion-icon :icon="beerOutline"></ion-icon>
+          <ion-icon :icon="beerOutline"></ion-icon>&nbsp;
           <ion-text>Bottles</ion-text>
         </ion-button>
       </ion-col>
@@ -90,7 +90,7 @@
           class="text-reset"
           href="/home/my-tickets"
         >
-          <ion-icon :icon="ticketOutline"></ion-icon>
+          <ion-icon :icon="ticketOutline"></ion-icon>&nbsp;
           Tickets
         </ion-button>
       </ion-col>
@@ -101,7 +101,7 @@
           class="text-reset"
           href="/home/outlets"
         >
-          <ion-icon :icon="mailOpenOutline"></ion-icon>
+          <ion-icon :icon="mailOpenOutline"></ion-icon>&nbsp;
           RSVP
         </ion-button>
       </ion-col>
@@ -112,7 +112,7 @@
           class="text-reset"
           href="/home/outlets"
         >
-          <ion-icon :icon="mapOutline"></ion-icon>
+          <ion-icon :icon="mapOutline"></ion-icon>&nbsp;
           Outlet
         </ion-button>
       </ion-col>
@@ -154,8 +154,8 @@ ion-grid {
   // --ion-grid-columns: 2;
   background-color: var(--ion-color-primary);
   &.pye {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
   }
   &.rounded-full {
     border-radius: 999px;
