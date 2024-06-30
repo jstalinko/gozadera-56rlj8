@@ -42,6 +42,16 @@
       <ion-button color="danger" type="button" expand="full" @click="doLogout"
         ><ion-icon :icon="logOutOutline"></ion-icon> Logout</ion-button
       >
+
+      <ion-button
+        color="danger"
+        type="button"
+        expand="full"
+        @click="deactivate"
+      >
+        <ion-icon :icon="powerOutline"></ion-icon> Deactivate
+        Account</ion-button
+      >
     </ion-content>
   </ion-page>
 </template>
@@ -62,7 +72,8 @@ import {
   IonButton,
   IonIcon,
   IonImg,
-  // useIonRouter,
+  toastController,
+  ToastOptions,
 } from "@ionic/vue";
 import {
   cardOutline,
@@ -70,6 +81,7 @@ import {
   mailOpenOutline,
   personCircleOutline,
   speedometerOutline,
+  powerOutline,
 } from "ionicons/icons";
 import { clearStorage } from "@/composables/storage";
 import { getProfile } from "@/composables/Http";
@@ -91,6 +103,18 @@ const xProfile = async () => {
 const doLogout = async () => {
   await clearStorage();
   window.location.href = "/auth/login";
+};
+
+const deactivate = async () => {
+  const toastConfig: ToastOptions = {
+    message: "Deactivated request will be notified soon by E-Mail",
+    duration: 1500,
+    position: "top",
+    color: "danger",
+  };
+  const toast = await toastController.create(toastConfig);
+  await toast.present();
+  await doLogout();
 };
 
 onMounted(async () => {
