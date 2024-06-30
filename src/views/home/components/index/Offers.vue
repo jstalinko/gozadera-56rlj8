@@ -1,6 +1,9 @@
 <template>
   <ion-grid :fixed="true">
     <ion-row>
+      <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+        <h4 class="bold">Special Offers</h4>
+      </ion-col>
       <ion-col
         v-for="it in 4"
         :key="it"

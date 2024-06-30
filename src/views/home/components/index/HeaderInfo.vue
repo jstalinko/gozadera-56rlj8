@@ -1,68 +1,74 @@
 <template>
-  <ion-grid :fixed="true" class="pye rounded-full">
+  <ion-grid :fixed="true" class="transparent">
     <ion-row>
-      <ion-col
-        class="br-1"
-        size="6"
-        size-sm="6"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
-        <ion-grid :fixed="true" class="transparent">
+      <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+        <ion-grid :fixed="true" class="rounded-full">
           <ion-row>
             <ion-col
-              size="12"
-              size-sm="12"
-              size-md="12"
-              size-lg="12"
-              size-xl="12"
+              class="br-1"
+              size="6"
+              size-sm="6"
+              size-md="6"
+              size-lg="6"
+              size-xl="6"
             >
-              Level
+              <ion-grid :fixed="true" class="transparent">
+                <ion-row>
+                  <ion-col
+                    size="12"
+                    size-sm="12"
+                    size-md="12"
+                    size-lg="12"
+                    size-xl="12"
+                  >
+                    Level
+                  </ion-col>
+                  <ion-col
+                    class="count"
+                    size="12"
+                    size-sm="12"
+                    size-md="12"
+                    size-lg="12"
+                    size-xl="12"
+                  >
+                    <ion-icon :icon="speedometerOutline" />
+                    {{ props.level }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-col>
             <ion-col
-              class="count"
-              size="12"
-              size-sm="12"
-              size-md="12"
-              size-lg="12"
-              size-xl="12"
+              class="bl-1"
+              size="6"
+              size-sm="6"
+              size-md="6"
+              size-lg="6"
+              size-xl="6"
             >
-              <ion-icon :icon="speedometerOutline" />
-              {{ props.level }}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-      <ion-col
-        class="bl-1"
-        size="6"
-        size-sm="6"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
-        <ion-grid :fixed="true" class="transparent">
-          <ion-row>
-            <ion-col
-              size="12"
-              size-sm="12"
-              size-md="12"
-              size-lg="12"
-              size-xl="12"
-            >
-              My Points
-            </ion-col>
-            <ion-col
-              class="count"
-              size="12"
-              size-sm="12"
-              size-md="12"
-              size-lg="12"
-              size-xl="12"
-            >
-              <ion-icon :icon="cardOutline" />
-              {{ props.point }}
+              <ion-grid :fixed="true" class="transparent">
+                <ion-row>
+                  <ion-col
+                    size="12"
+                    size-sm="12"
+                    size-md="12"
+                    size-lg="12"
+                    size-xl="12"
+                  >
+                    My Points
+                  </ion-col>
+                  <ion-col
+                    class="count"
+                    size="12"
+                    size-sm="12"
+                    size-md="12"
+                    size-lg="12"
+                    size-xl="12"
+                  >
+                    <ion-icon :icon="cardOutline" />
+                    {{ props.point }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -151,7 +157,6 @@ const props = withDefaults(defineProps<HeaderInfoProps>(), {
 
 <style scoped lang="scss">
 ion-grid {
-  // --ion-grid-columns: 2;
   background-color: var(--ion-color-primary);
   &.pye {
     padding-top: 1px;

@@ -8,60 +8,13 @@
 
       <Offers />
 
-      <ion-card class="rounded">
-        <ion-card-header>
-          <ion-card-title class="text-center">TOP 10 SPENDER</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-list :inset="true">
-            <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start">
-                1.
-              </ion-badge>
-              <ion-label>justalinko</ion-label>
-              <ion-badge color="primary" slot="end">VIP</ion-badge>
-            </ion-item>
-            <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start">
-                1.
-              </ion-badge>
-              <ion-label>justalinko</ion-label>
-              <ion-badge color="primary" slot="end">VIP</ion-badge>
-            </ion-item>
-            <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start">
-                1.
-              </ion-badge>
-              <ion-label>justalinko</ion-label>
-              <ion-badge color="primary" slot="end">VIP</ion-badge>
-            </ion-item>
-            <ion-item :button="true">
-              <ion-badge class="ion-padding rounded bold" slot="start">
-                1.
-              </ion-badge>
-              <ion-label>justalinko</ion-label>
-              <ion-badge color="primary" slot="end">VIP</ion-badge>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
+      <Spenders />
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import {
-  IonPage,
-  IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonCardHeader,
-  IonCard,
-  IonBadge,
-  IonCardContent,
-  IonCardTitle,
-} from "@ionic/vue";
+import { IonPage, IonContent } from "@ionic/vue";
 
 import Header from "./components/index/Header.vue";
 import HeaderInfo from "./components/index/HeaderInfo.vue";
@@ -71,6 +24,7 @@ import { ref, onMounted } from "vue";
 import { getProfile } from "@/composables/Http";
 import { clearStorage, setStore } from "@/composables/storage";
 import { Loading } from "@/composables/Utils";
+import Spenders from "./components/index/Spenders.vue";
 
 const profile: any = ref({});
 

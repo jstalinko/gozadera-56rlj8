@@ -81,7 +81,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/home/Outlets.vue"),
       },
     ],
-  }
+  },
 ];
 
 const router = createRouter({
@@ -90,8 +90,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
-  let targetToRoute: any = to.name;
+  const guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
+  const targetToRoute: any = to.name;
   if (isAuthenticated) {
     if (guestGuardRouteNamed.includes(targetToRoute)) {
       next({ name: "Home" });
