@@ -4,7 +4,7 @@ import { RouteRecordRaw } from "vue-router";
 import TabsLayout from "@/views/home/TabsLayout.vue";
 import { tokenExist } from "@/composables/storage";
 
-// const isAuthenticated: boolean = await tokenExist(); // demo
+const isAuthenticated: boolean = await tokenExist(); // demo
 
 const routes: Array<RouteRecordRaw> = [
   /* -------------------------------- Root Path ------------------------------- */
@@ -81,7 +81,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/home/Outlets.vue"),
       },
     ],
-  },
+  }
 ];
 
 const router = createRouter({
@@ -89,21 +89,21 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
-//   let targetToRoute: any = to.name;
-//   if (isAuthenticated) {
-//     if (guestGuardRouteNamed.includes(targetToRoute)) {
-//       next({ name: "Home" });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     if (guestGuardRouteNamed.includes(targetToRoute)) {
-//       next();
-//     } else {
-//       next({ name: "Login" });
-//     }
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  let guestGuardRouteNamed = ["Login", "Register", "ForgotPassword"];
+  let targetToRoute: any = to.name;
+  if (isAuthenticated) {
+    if (guestGuardRouteNamed.includes(targetToRoute)) {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    if (guestGuardRouteNamed.includes(targetToRoute)) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  }
+});
 export default router;
