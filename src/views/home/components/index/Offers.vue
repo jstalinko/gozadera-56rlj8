@@ -5,9 +5,9 @@
         <h4 class="bold">Special Offers</h4>
       </ion-col>
       <ion-col
-        v-for="it in 4"
-        :key="it"
-        class="count"
+        v-for="(val, idx) in offers"
+        :key="idx"
+        class="wrapper"
         size="6"
         size-sm="6"
         size-md="6"
@@ -15,10 +15,13 @@
         size-xl="6"
       >
         <ion-img
-          :src="`https://swiperjs.com/demos/images/nature-${it + 1}.jpg`"
+          :src="`https://swiperjs.com/demos/images/nature-${idx + 1}.jpg`"
           class="cut"
           alt="The Wisconsin State Capitol building in Madison, WI at night"
-        ></ion-img>
+        />
+        <div>
+          <p class="content">{{ val }}</p>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -26,6 +29,9 @@
 
 <script lang="ts" setup>
 import { IonGrid, IonCol, IonRow, IonImg } from "@ionic/vue";
+import { ref } from "vue";
+
+const offers = ref(["Events", "Everyday", "Weekday", "Weekend"]);
 </script>
 
 <style lang="scss" scoped>
@@ -38,5 +44,39 @@ ion-img {
 
 ion-col {
   padding: 10px;
+  // ion-img {
+  // &::part(image) {
+  // filter: blur(8px);
+  // }
+  // }
+  &.wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 75%;
+        height: 75%;
+        color: #ffffff;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.7);
+        font-weight: bold;
+        font-size: 1.25rem;
+        border: solid 1px #ffffff;
+      }
+    }
+  }
 }
 </style>

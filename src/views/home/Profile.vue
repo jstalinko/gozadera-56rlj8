@@ -80,7 +80,7 @@ const router = useIonRouter();
 const profile: any = ref({});
 
 const xProfile = async () => {
-  let response: any = await getProfile();
+  const response: any = await getProfile();
   if (response.data.code == 200) {
     delete response.data.data.qrcode;
     profile.value = response.data.data;
@@ -94,6 +94,17 @@ const doLogout = async () => {
 };
 
 onMounted(async () => {
-  // await xProfile();
+  await xProfile();
 });
 </script>
+
+<style scoped lang="scss">
+ion-title {
+  &.ios,
+  &.md {
+    &.title-large {
+      font-size: 1.25rem;
+    }
+  }
+}
+</style>

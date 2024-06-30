@@ -68,7 +68,6 @@ import {
   IonCol,
   IonImg,
   toastController,
-  useIonRouter,
 } from "@ionic/vue";
 import { ref } from "vue";
 import { doLogin } from "@/composables/Http";
@@ -76,7 +75,6 @@ import { setToken } from "@/composables/storage";
 import { Loading } from "@/composables/Utils";
 const email = ref("");
 const password = ref("");
-const router = useIonRouter();
 
 const submitLogin = async () => {
   await Loading(1400, "Please wait...");
@@ -105,3 +103,24 @@ const submitLogin = async () => {
   await toast.present();
 };
 </script>
+
+<style scoped lang="scss">
+ion-input {
+  &.ios {
+    --border-color: var(
+      --ion-color-step-500,
+      var(--ion-background-color-step-500, gray)
+    );
+    border-bottom: solid 1px var(--border-color);
+  }
+}
+
+ion-title {
+  &.ios,
+  &.md {
+    &.title-large {
+      font-size: 1.25rem;
+    }
+  }
+}
+</style>

@@ -2,7 +2,7 @@
   <ion-grid :fixed="true" class="transparent">
     <ion-row>
       <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
-        <ion-grid :fixed="true" class="rounded-full">
+        <ion-grid :fixed="true" class="rounded-full summary">
           <ion-row>
             <ion-col
               class="br-1"
@@ -164,6 +164,11 @@ ion-grid {
   &.transparent {
     background-color: transparent;
   }
+  &.summary {
+    ion-col {
+      padding: 2px 5px;
+    }
+  }
 }
 
 ion-col {
@@ -174,6 +179,7 @@ ion-col {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    font-size: 0.8rem;
   }
   &.align-start {
     text-align: start;

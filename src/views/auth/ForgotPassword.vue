@@ -52,3 +52,24 @@
 <script setup lang="ts">
 import { IonPage, IonContent, IonButton, IonInput, IonTitle } from "@ionic/vue";
 </script>
+
+<style scoped lang="scss">
+ion-input {
+  &.ios {
+    --border-color: var(
+      --ion-color-step-500,
+      var(--ion-background-color-step-500, gray)
+    );
+    border-bottom: solid 1px var(--border-color);
+  }
+}
+
+ion-title {
+  &.ios,
+  &.md {
+    &.title-large {
+      font-size: 1.25rem;
+    }
+  }
+}
+</style>
