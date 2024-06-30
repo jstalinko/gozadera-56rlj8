@@ -129,7 +129,7 @@ const filterSubAction = async (sub: string) => {
     await getProduct();
     const productx = products.value;
     products.value = await productx.filter(
-      (product) => product.sub_category == sub
+      (product: Record<string, unknown>) => product.sub_category == sub
     );
   }
 };

@@ -62,7 +62,7 @@ import {
   IonButton,
   IonIcon,
   IonImg,
-  useIonRouter,
+  // useIonRouter,
 } from "@ionic/vue";
 import {
   cardOutline,
@@ -76,7 +76,7 @@ import { getProfile } from "@/composables/Http";
 import { ref, onMounted } from "vue";
 import { imageUrl } from "@/composables/Utils";
 
-const router = useIonRouter();
+// const router = useIonRouter();
 const profile: any = ref({});
 
 const xProfile = async () => {

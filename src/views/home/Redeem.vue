@@ -118,8 +118,9 @@ const getProductRedeem = async () => {
   const response: any = await getRedeemables();
   if (response.data.code == 200) {
     redeemables.value = response.data.data;
-  } else {
   }
+  // else {
+  // }
 };
 const getRedeemHist = async () => {
   await Loading(1500, "Please wait ...");
