@@ -19,8 +19,8 @@
                   {{ val }}.
                 </ion-badge>
                 <ion-label>
-                  Lorem Ip{{ val }}sum
-                  <sub>123,123 K</sub>
+                  Cupcake Ip {{ val }} coba
+                  <sub>123,12{{ val }} K</sub>
                 </ion-label>
                 <ion-badge
                   slot="end"

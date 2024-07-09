@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "id.gozadera",
+  appId: "id.gozadera.app",
   appName: "Gozadera",
   webDir: "dist",
   plugins: {
