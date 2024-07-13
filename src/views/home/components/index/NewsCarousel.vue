@@ -19,23 +19,8 @@
           :loop="true"
           :centeredSlides="true"
         >
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </swiper-slide>
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-          </swiper-slide>
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-          </swiper-slide>
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-          </swiper-slide>
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-          </swiper-slide>
-          <swiper-slide>
-            <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+          <swiper-slide v-for="(val, i) in banners" :key="i">
+            <img :src="baseUrlImage + val.image" />
           </swiper-slide>
         </swiper>
       </ion-col>
@@ -44,9 +29,39 @@
 </template>
 
 <script lang="ts" setup>
+import { getBanners } from "@/composables/Http";
 import { IonCol, IonGrid, IonRow } from "@ionic/vue";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { onMounted, ref } from "vue";
+
+type BannerType = {
+  id: number;
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+};
+
+const baseUrlImage = ref(
+  "https://gozadera-backend.fotografersukasuka.com/storage/"
+);
+const banners = ref<BannerType[]>([]);
+
+async function fetchBanners() {
+  const response = await getBanners();
+
+  if (response.data.code === 200) {
+    banners.value = response.data.data;
+  }
+}
+
+onMounted(async () => {
+  await fetchBanners();
+});
 </script>
 
 <style scoped lang="scss">

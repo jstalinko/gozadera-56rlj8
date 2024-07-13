@@ -7,27 +7,29 @@ export const HEADERS = async () => {
   async function compile() {
     const _TOKEN = await getToken();
 
-  return {
-    auth: {
-      "Content-Type": "application/json",
-      "User-Agent": "@GozaderaApp",
-      Authorization: `Bearer ${_TOKEN}`,
-    },
-    basic: {
-      "Content-Type": "application/json",
-      "User-Agent": "@GozaderaApp",
-    },
-  }
+    console.log("token", _TOKEN);
+
+    return {
+      auth: {
+        "Content-Type": "application/json",
+        "User-Agent": "@GozaderaApp",
+        Authorization: `Bearer ${_TOKEN}`,
+      },
+      basic: {
+        "Content-Type": "application/json",
+        "User-Agent": "@GozaderaApp",
+      },
+    };
   }
 
-  const {auth, basic} = await compile()
-  return {auth, basic}
+  const { auth, basic } = await compile();
+  return { auth, basic };
 };
 
 /*--------------------------- apiGet ------------------------------*/
 
 export const apiGet = async (path: any, options: any) => {
-  let opt = {
+  const opt = {
     url: config.apiUrl + path,
     ...options,
   };
@@ -39,7 +41,7 @@ export const apiGet = async (path: any, options: any) => {
 /*--------------------------- apiPost ------------------------------*/
 
 export const apiPost = async (path: any, data: any, options: any) => {
-  let opt = {
+  const opt = {
     url: config.apiUrl + path,
     data: data,
     ...options,
@@ -51,7 +53,7 @@ export const apiPost = async (path: any, data: any, options: any) => {
 
 /*--------------------------- doLogin ------------------------------*/
 export const doLogin = async (email: string, password: string) => {
-  let options = {
+  const options = {
     headers: (await HEADERS()).basic,
   };
 
@@ -84,16 +86,19 @@ export const doRegister = async (
 };
 
 /*------------------------ doResetPassword ------------------------*/
-export const doResetPassword = async(phone: any) => {
-  const response = await apiPost(`forgot-password` , {phone: phone} , {headers: (await HEADERS()).basic });
+export const doResetPassword = async (phone: any) => {
+  const response = await apiPost(
+    `forgot-password`,
+    { phone: phone },
+    { headers: (await HEADERS()).basic }
+  );
 
   return response;
-
-}
+};
 
 /*-------------------------- Get product by category ----------------- */
 export const getProductByCategory = async (category: string) => {
-  let options = {
+  const options = {
     headers: (await HEADERS()).auth,
   };
   const response: any = await apiGet(`category/${category}`, options);
@@ -119,3 +124,9 @@ export const getRedeemHistory = async () =>
 /*------------------------- get Profile ------------------------*/
 export const getProfile = async () =>
   await apiGet(`profile`, { headers: (await HEADERS()).auth });
+
+export const getTopSpenders = async () =>
+  await apiGet("top-spender", { headers: (await HEADERS()).basic });
+
+export const getBanners = async () =>
+  await apiGet("banners", { headers: (await HEADERS()).auth });
