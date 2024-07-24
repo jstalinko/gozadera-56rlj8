@@ -1,6 +1,6 @@
 import { CapacitorHttp, HttpResponse } from "@capacitor/core";
 import { useAppConfig } from "./AppConfig";
-import { getToken } from "./storage";
+import { getStore, getToken } from "./storage";
 const config = useAppConfig();
 
 export const HEADERS = async () => {
@@ -126,7 +126,14 @@ export const getProfile = async () =>
   await apiGet(`profile`, { headers: (await HEADERS()).auth });
 
 export const getTopSpenders = async () =>
-  await apiGet("top-spender", { headers: (await HEADERS()).basic });
+  await apiGet(`top-spender`, { headers: (await HEADERS()).basic });
 
 export const getBanners = async () =>
-  await apiGet("banners", { headers: (await HEADERS()).auth });
+  await apiGet(`banners`, { headers: (await HEADERS()).auth });
+
+export const getMyBottles = async () => {
+  let member_id = await getStore("_id");
+  return await apiGet(`my-bottles?member_id=${member_id}`, {
+    headers: (await HEADERS()).auth,
+  });
+};
