@@ -13,11 +13,13 @@
       </ion-col>
       <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
         <swiper
-          :modules="[Autoplay, Navigation]"
+          :modules="[Autoplay, Navigation,Mousewheel]"
           :navigation="true"
-          :autoplay="true"
+          :autoplay="{delay:3000}"
           :loop="true"
+          :mousewheel="true"
           :centeredSlides="true"
+          :grabCursor="true"
         >
           <swiper-slide v-for="(val, i) in banners" :key="i">
             <img :src="baseUrlImage + val.image" />
@@ -31,7 +33,7 @@
 <script lang="ts" setup>
 import { getBanners } from "@/composables/Http";
 import { IonCol, IonGrid, IonRow } from "@ionic/vue";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, EffectCoverflow, Mousewheel, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { onMounted, ref } from "vue";
 

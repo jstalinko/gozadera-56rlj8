@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <ion-container>
+        <ion-content>
 
-        </ion-container>
+        </ion-content>
     </ion-page>
 </template>
 

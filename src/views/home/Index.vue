@@ -33,6 +33,7 @@ const xProfile: any = async () => {
   const response: any = await getProfile();
   if (response.data.code == 200) {
     await setStore("_myqrcode", response.data.data.qrcode);
+    await setStore("_point",response.data.data.point);
     delete response.data.data.qrcode;
     profile.value = response.data.data;
   } else {

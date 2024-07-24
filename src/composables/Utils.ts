@@ -46,3 +46,8 @@ export const Loading = async (duration: number, text: string) => {
 
   loading.present();
 };
+
+export const convertDateString =  (date: any) => {
+  let d = new Date(date).toLocaleDateString();
+  return d;
+}

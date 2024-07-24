@@ -1,7 +1,7 @@
 <template>
   <ion-img
     src="/icon.png"
-    style="width: 120px; height: 150px; margin: 0 auto"
+    style="width: 120px; height: 150px; margin: 0 auto;margin-top: 22px;"
   />
   <h4 class="ion-text-center">Welcome , {{ props.username }} !</h4>
 </template>

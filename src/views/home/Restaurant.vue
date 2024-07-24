@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-header collapse="condense">
+      <ion-header collapse="condense" class="mt-header">
         <ion-toolbar>
           <ion-title>Menu F & B</ion-title>
         </ion-toolbar>

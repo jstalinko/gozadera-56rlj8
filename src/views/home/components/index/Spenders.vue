@@ -71,7 +71,7 @@ const spenders = ref<SpenderType[]>([]);
 async function getSpenders() {
   const response: HttpResponse = await getTopSpenders();
 
-  if (response.data.code == 200) {
+  if (response.data.code === 200) {
     spenders.value = response.data.data;
   }
 }

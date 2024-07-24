@@ -105,7 +105,7 @@
           expand="block"
           color="primary"
           class="text-reset"
-          href="/home/outlets"
+          href="/home/rsvp"
         >
           <ion-icon :icon="mailOpenOutline"></ion-icon>&nbsp;
           RSVP

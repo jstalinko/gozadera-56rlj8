@@ -14,24 +14,43 @@
         size-lg="6"
         size-xl="6"
       >
-        <ion-img
+        <ion-button :href="'/home/offer/'+val.category" color="transparent">
+          <ion-img
           src="https://gozadera-mobile.fotografersukasuka.com/img/event/kanan.jpeg"
           class="cut"
-          alt="The Wisconsin State Capitol building in Madison, WI at night"
+          :alt="val.name"
         />
         <div>
-          <p class="content">{{ val }}</p>
+          <p class="content">{{ val.name }}</p>
         </div>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </template>
 
 <script lang="ts" setup>
-import { IonGrid, IonCol, IonRow, IonImg } from "@ionic/vue";
+import { IonGrid, IonCol, IonRow, IonImg,IonButton } from "@ionic/vue";
 import { ref } from "vue";
 
-const offers = ref(["Events", "Everyday", "Weekday", "Weekend"]);
+const offers = ref([
+  {
+    name: "Events",
+    category: "event"
+  },
+  {
+    name: "Weekend",
+    category: "weekend"
+  },
+  {
+    name: "Weekday",
+    category: "weekday"
+  },
+  {
+    name: "Everyday",
+    category:"everyday"
+  }
+]);
 </script>
 
 <style lang="scss" scoped>
@@ -75,6 +94,11 @@ ion-col {
         font-weight: bold;
         font-size: 1.25rem;
         border: solid 1px #ffffff;
+      }
+      .content:hover{
+        background-color: rgba(207,137,1,0.86);
+        color:#000;
+        border:solid 1px #000;
       }
     }
   }

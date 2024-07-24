@@ -78,6 +78,14 @@ const routes: Array<RouteRecordRaw> = [
         path: "outlets",
         component: () => import("@/views/home/Outlets.vue"),
       },
+      {
+        path: "rsvp",
+        component: () => import("@/views/home/Rsvp.vue"),
+      },
+      {
+        path:"offer/:category",
+        component:() => import("@/views/home/Offers.vue")
+      }
     ],
   },
 ];
