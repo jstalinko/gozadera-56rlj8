@@ -15,7 +15,7 @@
         size-xl="6"
       >
         <ion-img
-          :src="`https://swiperjs.com/demos/images/nature-${idx + 1}.jpg`"
+          src="https://gozadera-mobile.fotografersukasuka.com/img/event/kanan.jpeg"
           class="cut"
           alt="The Wisconsin State Capitol building in Madison, WI at night"
         />
@@ -71,7 +71,7 @@ ion-col {
         height: 75%;
         color: #ffffff;
         border-radius: 8px;
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.85);
         font-weight: bold;
         font-size: 1.25rem;
         border: solid 1px #ffffff;

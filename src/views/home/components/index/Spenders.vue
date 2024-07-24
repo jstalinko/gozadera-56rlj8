@@ -9,26 +9,26 @@
           </ion-card-header>
           <ion-card-content>
             <ion-list>
-              <ion-item v-for="(val, idx) in 10" :key="val">
+              <ion-item v-for="(item, idx) in spenders" :key="idx">
                 <ion-badge
                   slot="start"
                   color="primary"
                   class="rank bold"
                   :class="{ outlined: idx >= 3 }"
                 >
-                  {{ val }}.
+                  {{ idx + 1 }}.
                 </ion-badge>
                 <ion-label>
-                  Lorem Ip{{ val }}sum
-                  <sub>123,123 K</sub>
+                  {{ item.username }}
+                  <sub>{{ currencyFormat(Number(item.total_payment)) }} K</sub>
                 </ion-label>
                 <ion-badge
                   slot="end"
                   color="primary"
-                  class="label bold"
+                  class="label bold uppercase"
                   :class="[idx >= 3 ? 'outlined' : '']"
                 >
-                  VIP
+                  {{ item.level }}
                 </ion-badge>
               </ion-item>
             </ion-list>
@@ -41,6 +41,9 @@
 </template>
 
 <script lang="ts" setup>
+import { getTopSpenders } from "@/composables/Http";
+import { currencyFormat } from "@/composables/Utils";
+import { HttpResponse } from "@capacitor/core";
 import {
   IonGrid,
   IonCol,
@@ -54,6 +57,28 @@ import {
   IonCardContent,
   IonCardTitle,
 } from "@ionic/vue";
+import { ref, onMounted } from "vue";
+
+interface SpenderType {
+  member_id: number;
+  total_payment: string;
+  username: string;
+  level: string;
+}
+
+const spenders = ref<SpenderType[]>([]);
+
+async function getSpenders() {
+  const response: HttpResponse = await getTopSpenders();
+
+  if (response.data.code == 200) {
+    spenders.value = response.data.data;
+  }
+}
+
+onMounted(async () => {
+  await getSpenders();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -92,5 +117,8 @@ ion-item {
 }
 .list-ios {
   background: transparent;
+}
+.uppercase {
+  text-transform: uppercase;
 }
 </style>
