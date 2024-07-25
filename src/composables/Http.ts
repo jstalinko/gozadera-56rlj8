@@ -137,3 +137,18 @@ export const getMyBottles = async () => {
     headers: (await HEADERS()).auth,
   });
 };
+
+
+/*------------------------- get Event ----------------------------*/
+export const getEvent = async (category: String|null) => {
+
+  let resp: any;
+  if(category == null)
+  {
+    resp = await apiGet(`event` , {headers: (await HEADERS()).auth});
+  }else{
+    resp = await apiGet(`event/${category}` , {headers: (await HEADERS()).auth});
+  }
+
+  return resp;
+}

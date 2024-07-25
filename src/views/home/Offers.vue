@@ -3,12 +3,19 @@
         <ion-content>
             <ion-header collapse="condense" class="mt-header">
                 <ion-toolbar>
-                    <ion-title>{{ category.toUpperCase() }}</ion-title>
+                    <ion-title>
+                        <span v-if="category=='event'">
+                            {{ category.toUpperCase() }}
+                        </span>
+                        <span v-else>
+                            PROMO {{ category.toUpperCase() }}
+                        </span>
+                    </ion-title>
                 </ion-toolbar>
             </ion-header>
 
             <div class="ion-padding" style="margin-top: 20px">
-                <ion-segment value="buttons">
+                <ion-segment value="buttons" v-model="activeTab">
                     <ion-segment-button value="upcoming">
                         <ion-label>UP-COMING</ion-label>
                     </ion-segment-button>
@@ -19,19 +26,74 @@
                         <ion-label>FINISHED</ion-label>
                     </ion-segment-button>
                 </ion-segment>
+               
                 <br />
+
+                <NoData :message="'while no data is displayed'" v-if="eventsData.length < 1"/>
+
+                <ion-card v-for="(event, index) in eventsData" :key="index" v-if="eventsData.length > 0">
+                    <ion-img :alt="event.name" :src="imageUrl(event.image)" />
+                    <ion-card-header>
+                        <ion-card-title>{{ event.name }}</ion-card-title>
+                        <ion-card-subtitle class="flex justify-between " color="primary">{{ new Date(event.start_date).toLocaleDateString() }} - {{ new
+                            Date(event.end_date).toLocaleDateString() }} 
+                            <ion-badge>{{ event.type }}</ion-badge>
+                            <ion-badge :color="badgeColor[event.status]">{{ event.status }}</ion-badge>    
+                        </ion-card-subtitle>
+                    </ion-card-header>
+
+                    <ion-card-content>
+                        {{ event.description }}
+                        <ion-button expand="block" :color="badgeColor[event.status]">
+                            <span v-if="event.status == 'upcoming' || event.status == 'ongoing'">
+                                <ion-icon :icon="calendarClearOutline"></ion-icon> Reservasi
+                            </span>
+                            <span v-else>
+                                <ion-icon :icon="imageOutline"></ion-icon> Gallery
+                            </span>
+                        </ion-button>
+                    </ion-card-content>
+                </ion-card>
             </div>
         </ion-content>
     </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonTitle } from '@ionic/vue';
-import { ref } from 'vue';
+import NoData from '@/components/NoData.vue';
+import { getEvent } from '@/composables/Http';
+import { imageUrl, Loading } from '@/composables/Utils';
+import { HttpResponse } from '@capacitor/core';
+import { IonPage, IonContent, IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonTitle, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg,IonBadge,IonButton,IonIcon } from '@ionic/vue';
+import { calendarClearOutline, imageOutline } from 'ionicons/icons';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 
 const route = useRoute();
-const category = ref(route.params.category);
+const category:any = ref(route.params.category);
+const activeTab = ref('ongoing');
+const eventsData:any = ref([]);
+const badgeColor: any = ref({
+    finished: 'danger',
+    ongoing: 'success',
+    upcoming: 'primary'
+});
+
+watch(activeTab, async() => await getEvents());
+const getEvents = async () => {
+    await Loading(1000,"Please wait...");
+    let cat: any = (category.value == 'event') ? null : category.value;
+    let resp: HttpResponse = await getEvent(cat);
+    if (cat == null) {
+        eventsData.value = resp.data.data.filter((ev : any) => ev.status == activeTab.value);
+    } else {
+        eventsData.value = resp.data.data.filter((ev:any) => ev.type == category.value).filter((s:any) => s.status == activeTab.value);
+    }
+}
+
+onMounted(async () => {
+    await getEvents();
+});
 
 </script>

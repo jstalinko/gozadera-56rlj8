@@ -33,15 +33,17 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonHeader, IonToolbar, IonTitle } from '@ionic/vue';
+import { IonPage, IonContent, IonHeader, IonToolbar, IonTitle ,IonList,IonItem,IonNote,IonIcon} from '@ionic/vue';
 import { calendarClearOutline } from 'ionicons/icons';
 import NoData from '@/components/NoData.vue';
 import { onMounted, ref } from 'vue';
 import { HttpResponse } from '@capacitor/core';
 import { getMyBottles } from '@/composables/Http';
-const myBottles = ref([]);
+import { Loading } from '@/composables/Utils';
+const myBottles: any = ref([]);
 
 const getBottles = async() => {
+    await Loading(1000,"Please wait...");
     let resp: HttpResponse = await getMyBottles();
     myBottles.value = resp.data.data;
     console.log(resp);
