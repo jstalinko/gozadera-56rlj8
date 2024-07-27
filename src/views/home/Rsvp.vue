@@ -1,55 +1,156 @@
 <template>
-    <ion-page>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Reservasi</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <div class="relative w-full h-[600px]">
-          <ion-img src="/map.jpeg" alt="Map" class="w-full h-full object-cover" />
-          <div
-            v-for="table in tables"
-            :key="table.id"
-            :style="{ top: table.top, left: table.left }"
-            class="absolute p-4 bg-red-500 text-white cursor-pointer"
-            @click="selectTable(table)"
-          >
-            {{ table.name }}
-          </div>
-        </div>
-      </ion-content>
-    </ion-page>
-  </template>
-  
-  <script setup>
-  import { IonPage,IonHeader,IonToolbar,IonTitle,IonImg,IonContent } from '@ionic/vue';
-  import { ref } from 'vue';
-  
-  const tables = ref([
-    { id: 1, name: 'Table 1', top: '10%', left: '20%' },
-    { id: 2, name: 'Table 2', top: '30%', left: '50%' },
-    { id: 3, name: 'Table 3', top: '60%', left: '70%' },
-    { id: 3, name: 'Table 4', top: '70%', left: '70%' },
+  <ion-page>
+    <ion-content>
+      <ion-card>
+        <img :alt="outlet_details.name" :src="imageUrl(outlet_details.image)" />
+        <ion-card-header>
+          <ion-card-title>{{ outlet_details.name }}</ion-card-title>
+          <ion-card-subtitle>{{ outlet_details.tagline }}</ion-card-subtitle>
+        </ion-card-header>
 
-    { id: 3, name: 'Table 5', top: '80%', left: '70%' },
+        <ion-card-content>
+          {{ outlet_details.address }}
+        </ion-card-content>
+      </ion-card>
 
-    { id: 3, name: 'Table 6', top: '90%', left: '70%' },
+      <ion-card>
+        <img :alt="outlet_details.name" :src="imageUrl(outlet_details.area_image)" />
 
-  ]);
-  
-  const selectTable = (table) => {
-    alert(`You selected ${table.name}`);
-  };
-  </script>
-  
-  <style scoped>
-  .relative {
-    position: relative;
+        <ion-card-header>
+          <ion-card-subtitle>Reservation Form</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <b>
+            Choose Date
+          </b>
+          <ion-datetime-button datetime="datetime" ></ion-datetime-button>
+          <ion-modal :keep-contents-mounted="true" >
+            <ion-datetime id="datetime" v-model="dateSelected"></ion-datetime>
+          </ion-modal>
+          <br>
+          <b>
+            Choose Floor
+          </b>
+          <ion-segment v-model="floorSelected">
+            <ion-segment-button v-for="(floor, index) in floors" :value="floor.floor" :key="index">
+              <ion-label color="primary">{{ getOrdinalSuffix(floor.floor) }}</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <br>
+          <b>
+            Choose Table(s)
+          </b>
+          <ion-buttons slot="start">
+            <ion-button v-for="(tbl, index) in tables" :key="index" @click="selectTable(tbl, tbl.id, floorSelected)"
+              :fill="carts.find((a: any) => a?.id == tbl.id) ? 'solid' : 'outline'">{{ tbl.code }}</ion-button>
+          </ion-buttons>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card v-if="carts.length > 0">
+        <ion-card-header>
+          <ion-card-subtitle>
+            Summary
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item>Reservation for : {{ dateSelected }}</ion-item>
+            <ion-item v-for="(cart, index) in carts" :key="index">
+              <ion-label>
+                {{ getOrdinalSuffix(cart.floor) }} Floor - {{ cart.table }} - {{ cart.max_pax }} Max Pax - {{
+                  currencyIDR(cart.price) }}
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <br>
+
+          <ion-item>
+            <ion-select label="Payment Method" label-placement="floating" v-model="payment_method">
+              <ion-select-option value="transfer">BANK TRANSFER</ion-select-option>
+              <ion-select-option value="qris">QRIS</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <br>
+          <ion-button expand="full"><ion-icon :icon="sendOutline"></ion-icon>&nbsp; Continue</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ion-page>
+</template>
+<script setup lang="ts">
+import { IonPage, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonDatetimeButton, IonModal, IonDatetime, IonSegment, IonSegmentButton, IonLabel, IonButtons, IonButton, IonList, IonItem, IonSelect, IonSelectOption } from '@ionic/vue';
+import { useRoute } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { getOutletById, getOutletFloor, getOutletTableFloor, storeRsvp } from '@/composables/Http';
+import { getOrdinalSuffix, imageUrl, currencyIDR } from '@/composables/Utils';
+import { getStore } from '@/composables/storage';
+import { sendOutline } from 'ionicons/icons';
+
+const route = useRoute();
+const outlet_id: any = ref(route.params.id);
+const outlet_details:any = ref([]);
+const floorSelected: any = ref('1');
+const tableSelected: any = ref([]);
+const floors: any = ref([]);
+const tables: any = ref([]);
+const startDate: any = ref(route.query.startDate);
+const endDate: any = ref(route.query.endDate);
+const dateSelected: any = ref('');
+const payment_method = ref('transfer');
+const carts: any = ref([]);
+watch(floorSelected, async () => await getOutletTableFloor(outlet_id.value, floorSelected.value, startDate.value));
+
+const outletDetail = async () => {
+  let resp: any = await getOutletById(outlet_id.value);
+  if (resp.data.code === 200) outlet_details.value = resp.data.data;
+}
+
+const selectTable = (data: any, table: any, floor: any) => {
+  let item: any = carts.value.find((item:any) => item.id == table);
+  if (!item) {
+    carts.value.push({
+      id: data.id,
+      floor: floor,
+      table: data.code,
+      price: data.price,
+      max_pax: data.max_pax,
+    });
+  } else {
+    carts.value = carts.value.filter((item: any) => item.id != table);
+
   }
-  
-  .absolute {
-    position: absolute;
+
+  console.log(carts.value);
+};
+
+
+const prepareForRsvp = async () => {
+
+  let user_id = getStore("_id");
+  let data = JSON.stringify(carts.value);
+  let resp: any = await storeRsvp(data, outlet_id.value, user_id, dateSelected.value, payment_method.value)
+  console.log(resp);
+
+};
+const getFloor = async () => {
+  let resp: any = await getOutletFloor(outlet_id.value, startDate.value);
+  if (resp.data.code === 200) {
+    floors.value = resp.data.data;
   }
-  </style>
-  
+};
+const getTables = async () => {
+  let resp: any = await getOutletTableFloor(outlet_id.value, floorSelected.value, startDate.value);
+  if (resp.data.code === 200) {
+    tables.value = resp.data.data;
+  }
+}
+onMounted(async () => {
+  await outletDetail();
+  await getFloor();
+  await getTables();
+});
+</script>

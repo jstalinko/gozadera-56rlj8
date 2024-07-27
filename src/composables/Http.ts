@@ -138,17 +138,58 @@ export const getMyBottles = async () => {
   });
 };
 
-
 /*------------------------- get Event ----------------------------*/
-export const getEvent = async (category: String|null) => {
-
+export const getEvent = async (category: String | null) => {
   let resp: any;
-  if(category == null)
-  {
-    resp = await apiGet(`event` , {headers: (await HEADERS()).auth});
-  }else{
-    resp = await apiGet(`event/${category}` , {headers: (await HEADERS()).auth});
+  if (category == null) {
+    resp = await apiGet(`event`, { headers: (await HEADERS()).auth });
+  } else {
+    resp = await apiGet(`event/${category}`, {
+      headers: (await HEADERS()).auth,
+    });
   }
 
   return resp;
-}
+};
+
+/*--------------------------- get Outlets ------------------------*/
+export const getOutlets = async () => {
+  return await apiGet(`outlets`, { headers: (await HEADERS()).auth });
+};
+/*-------------------------- get outlet floor  -------------------*/
+export const getOutletFloor = async (outlet_id: any, rsvp_date: any) => {
+  return await apiGet(`outlet-tables-floor/${outlet_id}`, {
+    headers: (await HEADERS()).auth,
+  });
+};
+
+export const getOutletTableFloor = async (
+  outlet_id: any,
+  floor: any,
+  rsvp_date: any
+) => {
+  return await apiGet(
+    `outlet-tables-floor/${outlet_id}/${floor}?rsvp_date=${rsvp_date}`,
+    { headers: (await HEADERS()).auth }
+  );
+};
+
+/*-------------------------- get outlet by id -------------------*/
+export const getOutletById = async (id: Number) => {
+  return await apiGet(`outlet/${id}`, { headers: (await HEADERS()).auth });
+};
+
+/*-------------------------- store reservation -------------------*/
+export const storeRsvp = async(data:any,outlet_id:any,user_id:any,rsvp_date:any,payment_method:any) => {
+  return apiPost(`rsvp-multi` , 
+    {
+      data: data,
+      outlet_id: outlet_id,
+      user_id: user_id,
+      rsvp_date: rsvp_date,
+      payment_method: payment_method,
+  },
+  {
+    headers: (await HEADERS()).auth
+  });
+};

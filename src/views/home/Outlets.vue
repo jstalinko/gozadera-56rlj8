@@ -7,21 +7,30 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-card>
+      <ion-card v-if="outlets.length > 0" v-for="(out,index) in outlets" :key="index">
         <ion-card-header>
-          <ion-card-title>Gozadera Surabaya</ion-card-title>
+          <ion-card-title>{{ out.name }}</ion-card-title>
           <br>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.778839444882!2d112.74435097592152!3d-7.2659910927409035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbc2fc4e7249%3A0x1ed2ba078562f007!2sGOZADERA%20INDONESIA!5e0!3m2!1sid!2sid!4v1719756172441!5m2!1sid!2sid"
+            :src="out.gmaps_url"
             width="100%" height="200" style="border:0;" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </ion-card-header>
 
         <ion-card-content>
-          Here's a small text description for the card content. Nothing more, nothing less.
+         {{out.tagline}}
+         <br>
+         <i style="margin:6px;">{{ out.address }}</i>
+         <br>
+         <div class="flex justify-between" style="padding:2px;margin-top: 5px;">
+          <ion-badge><ion-icon :icon="phonePortraitOutline"></ion-icon> {{ out.phone }}</ion-badge>&nbsp;
+         <ion-badge v-if="out.is_karoke"><ion-icon :icon="micCircle"></ion-icon> Karoke</ion-badge>&nbsp;
+         <ion-badge v-if="out.is_bar"><ion-icon :icon="restaurantOutline"></ion-icon> Bar</ion-badge>&nbsp;
+         <ion-badge v-if="out.private_room"><ion-icon :icon="homeOutline"></ion-icon> Private Room</ion-badge>
+         </div>
+      
         </ion-card-content>
-
-        <ion-button expand="block"><ion-icon :icon="mailOutline"></ion-icon>&nbsp; Reservasi</ion-button>
+        <ion-button expand="block" :href="'/home/outlet/'+out.id+'?'+httpBuildQuery(dateParams)"><ion-icon :icon="mailOutline"></ion-icon>&nbsp; Reservation</ion-button>
         <br>
       </ion-card>
     </ion-content>
@@ -29,6 +38,25 @@
 </template>
 
 <script lang="ts" setup>
-import { IonCard, IonCardHeader, IonCardTitle, IonIcon, IonCardContent, IonButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import { mailOutline } from 'ionicons/icons';
+import { IonCard, IonCardHeader, IonCardTitle, IonIcon, IonCardContent, IonButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonBadge } from '@ionic/vue';
+import { homeOutline, mailOutline, micCircle, phonePortraitOutline, restaurantOutline } from 'ionicons/icons';
+import { getOutlets } from '@/composables/Http';
+import { onMounted, ref } from 'vue';
+import { httpBuildQuery, Loading } from '@/composables/Utils';
+const dateParams = ref({
+  startDate: new Date().toISOString(),
+  endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString()
+});
+const outlets: any = ref([]);
+const dataOutlets = async () => {
+  await Loading(1000, "Please wait ...");
+  let resp: any = await getOutlets();
+  if (resp.data.code == 200) {
+    outlets.value = resp.data.data;
+  }
+}
+
+
+onMounted(async () => await dataOutlets());
+
 </script>

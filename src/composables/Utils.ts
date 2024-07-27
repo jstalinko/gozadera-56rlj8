@@ -51,3 +51,15 @@ export const convertDateString =  (date: any) => {
   let d = new Date(date).toLocaleDateString();
   return d;
 }
+
+export const httpBuildQuery = (params: any)=> {
+  const queryString = Object.keys(params)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
+  return queryString;
+}
+export const getOrdinalSuffix = (number:any) =>{
+  const suffixes = ["th", "st", "nd", "rd"];
+  const value = number % 100;
+  return number + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+}
