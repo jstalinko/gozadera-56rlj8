@@ -27,10 +27,11 @@ export const currencyIDR = (amount: any) => {
   return formatter.format(amount);
 };
 
-export const imageUrl = (imagePath: string) => {
+export const imageUrl = (imagePath: string | undefined) => {
   const config = useAppConfig();
-  if (imagePath !== undefined) {
-    if (!imagePath.match(/^http/)) {
+
+  if (typeof imagePath === 'string') {
+    if (!imagePath.startsWith('http')) {
       return config.storageUrl + imagePath;
     }
   }
@@ -62,4 +63,12 @@ export const getOrdinalSuffix = (number:any) =>{
   const suffixes = ["th", "st", "nd", "rd"];
   const value = number % 100;
   return number + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+}
+
+export const dateFormatter = (date: string)=> {
+  return new Intl.DateTimeFormat("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
 }

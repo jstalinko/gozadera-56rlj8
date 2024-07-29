@@ -34,7 +34,7 @@
           </ion-list>
         </ion-card-content>
         <ion-button fill="clear" @click="onClickDetail(tik)">Payment Detail</ion-button>
-        <ion-button fill="clear">RSVP Detail</ion-button>
+        <ion-button fill="clear" :href="'/home/rsvp-detail/'+tik.id">RSVP Detail</ion-button>
       </ion-card>
       <!-- show payment detail and rsvp datail -->
       <ion-modal :is-open="isOpen">
@@ -45,7 +45,7 @@
             </ion-buttons>
             <ion-title>Payment Detail</ion-title>
             <ion-buttons slot="end">
-              <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
+              <ion-button :strong="true" @click="confirm(selectedTicket.id)">Detail</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -83,7 +83,7 @@
             <b><i>{{ p.account_number }} a/n {{ p.account_name }}</i></b> ( {{ p.bank_name }})
           </ion-text>
 
-          <div v-if="selectedTicket.payment_method == 'qris'" v-for="(p2, i2) in selectedTicket.payments" :key="index">
+          <div v-if="selectedTicket.payment_method == 'qris'" v-for="(p2, i2) in selectedTicket.payments" :key="i2">
             <ion-img :src="imageUrl(p2.qris_image)"></ion-img><br>
             <p>{{ p2.account_name }}</p>
           </div>
@@ -104,11 +104,12 @@
     </div>
     <div v-else>
       <b>Proof transfer :</b>
-      <ion-img :src="imageUrl(selectedTicket.proof_transfer)" ></ion-img>
+      <ion-img :src="imageUrl(selectedTicket.proof_transfer.image)" ></ion-img>
     </div>
 
         </ion-content>
       </ion-modal>
+
     </ion-content>
   </ion-page>
 </template>
@@ -142,10 +143,11 @@ import { onMounted, ref } from "vue";
 const isOpen = ref(false);
 const myTickets: any = ref([]);
 
-const selectedTicket = ref<Record<string, unknown>>({});
+const selectedTicket: any= ref<Record<string, unknown>>({});
 const preview:any = ref(null);
 const selectedFile:any = ref(null);
 const getTicket = async () => {
+  await Loading(1500,"Please wait...");
   const resp: any = await getMyTickets();
   if (resp.data.code === 200) {
     myTickets.value = resp.data.data;
@@ -194,8 +196,8 @@ const onClickDetail = (tik: Record<string, unknown>) => {
   selectedTicket.value = tik;
 };
 
-const confirm = () => {
-  console.log("oke jaran");
+const confirm = (id:any) => {
+  window.location.href = '/home/rsvp-detail/'+id;
 };
 
 const setOpen = (open: boolean) => {

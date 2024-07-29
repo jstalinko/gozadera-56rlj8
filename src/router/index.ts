@@ -87,6 +87,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/home/Rsvp.vue"),
       },
       {
+        path: "rsvp-detail/:id",
+        component: () => import("@/views/home/RsvpDetail.vue"),
+      },
+      {
         path: "gallery/:id",
         component:() => import("@/views/home/Gallery.vue"),
       },

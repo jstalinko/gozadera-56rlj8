@@ -220,5 +220,9 @@ export const uploadTransfer = async(files:any,rsvp_id: any) => {
   let resp:any= await apiPost(`upload-receipt` , formData , {headers: (await HEADERS()).auth});
 
   return resp;
+}
 
+/*-------------------------- rsvp detail ---------------------------------*/
+export const getRsvpDetail = async(id: Number) => {
+  return apiGet(`rsvp-detail/${id}` , {headers: (await HEADERS()).auth});
 }
