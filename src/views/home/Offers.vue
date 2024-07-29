@@ -81,7 +81,7 @@
 
           <ion-card-content>
             {{ event.description }}
-            <ion-button expand="block" :color="badgeColor[event.status]">
+            <ion-button expand="block" :color="badgeColor[event.status]" :href="(event.status !== 'finished') ? '/home/outlet/'+event.outlet_id : '/home/gallery/'+event.id">
               <span
                 v-if="event.status == 'upcoming' || event.status == 'ongoing'"
               >

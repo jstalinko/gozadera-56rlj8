@@ -206,3 +206,8 @@ export const storeRsvp = async (
 export const getMyTickets = async () => {
   return await apiGet(`my-ticket`, { headers: (await HEADERS()).auth });
 };
+
+/*------------------------- get gallery -----------------------------*/
+export const getGallery = async(event_id: Number) => {
+  return await apiGet(`gallery/${event_id}` , {headers: (await HEADERS()).auth });
+};
