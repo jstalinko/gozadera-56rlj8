@@ -211,3 +211,14 @@ export const getMyTickets = async () => {
 export const getGallery = async(event_id: Number) => {
   return await apiGet(`gallery/${event_id}` , {headers: (await HEADERS()).auth });
 };
+
+/*------------------------- upload transfer --------------------------*/
+export const uploadTransfer = async(files:any,rsvp_id: any) => {
+  var formData = new FormData();
+  formData.append('image', files);
+  formData.append('rsvp_id', rsvp_id);
+  let resp:any= await apiPost(`upload-receipt` , formData , {headers: (await HEADERS()).auth});
+
+  return resp;
+
+}

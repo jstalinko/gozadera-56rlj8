@@ -13,7 +13,7 @@
             <ion-card-subtitle>#{{ tik.invoice }}</ion-card-subtitle>
             <ion-card-subtitle color="primary">{{
               currencyIDR(tik.total)
-            }}</ion-card-subtitle>
+              }}</ion-card-subtitle>
           </div>
         </ion-card-header>
 
@@ -33,9 +33,7 @@
             </ion-item>
           </ion-list>
         </ion-card-content>
-        <ion-button fill="clear" @click="onClickDetail(tik)"
-          >Payment Detail</ion-button
-        >
+        <ion-button fill="clear" @click="onClickDetail(tik)">Payment Detail</ion-button>
         <ion-button fill="clear">RSVP Detail</ion-button>
       </ion-card>
       <!-- show payment detail and rsvp datail -->
@@ -45,23 +43,70 @@
             <ion-buttons slot="start">
               <ion-button @click="setOpen(false)">Cancel</ion-button>
             </ion-buttons>
-            <ion-title>Welcome</ion-title>
+            <ion-title>Payment Detail</ion-title>
             <ion-buttons slot="end">
               <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <p>{{ selectedTicket.invoice }}</p>
-          <ion-item>
-            <ion-input
-              label="Enter your name"
-              label-placement="stacked"
-              ref="input"
-              type="text"
-              placeholder="Your name"
-            ></ion-input>
-          </ion-item>
+          <b>#{{ selectedTicket.invoice }}</b><br>
+
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                Sub-Total : {{ currencyIDR(selectedTicket.subtotal) }}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                Total : {{ currencyIDR(selectedTicket.total) }}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                Status : <span v-html="statusUi(selectedTicket.payment_status)"></span>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                Payment Method : {{ selectedTicket.payment_method.toUpperCase() }}
+              </ion-label>
+            </ion-item>
+
+          </ion-list>
+          <br>
+          <b>Payment Destination</b><br><br>
+          <ion-text v-for="(p, i) in selectedTicket.payments" :key="i"
+            v-if="selectedTicket.payment_method == 'transfer'">
+            Transfer to : <br><br>
+            <b><i>{{ p.account_number }} a/n {{ p.account_name }}</i></b> ( {{ p.bank_name }})
+          </ion-text>
+
+          <div v-if="selectedTicket.payment_method == 'qris'" v-for="(p2, i2) in selectedTicket.payments" :key="index">
+            <ion-img :src="imageUrl(p2.qris_image)"></ion-img><br>
+            <p>{{ p2.account_name }}</p>
+          </div>
+
+          <br><br>
+          <div v-if="selectedTicket.proof_transfer == null">
+          <p>Upload proof transaction:</p><br>
+          <form @submit.prevent="uploadFile(selectedTicket.id)">
+      <ion-item>
+        <ion-label position="stacked">Select File</ion-label>
+        <input type="file" @change="onFileSelected" />
+      </ion-item>
+      <ion-item v-if="preview"><br>
+        <img :src="preview" alt="Image Preview" style="max-width: 100%; max-height: 200px;" />
+      </ion-item>
+      <ion-button type="submit" expand="full">Upload</ion-button>
+    </form>
+    </div>
+    <div v-else>
+      <b>Proof transfer :</b>
+      <ion-img :src="imageUrl(selectedTicket.proof_transfer)" ></ion-img>
+    </div>
+
         </ion-content>
       </ion-modal>
     </ion-content>
@@ -69,8 +114,8 @@
 </template>
 
 <script setup lang="ts">
-import { getMyTickets } from "@/composables/Http";
-import { currencyIDR, idrFormat } from "@/composables/Utils";
+import { getMyTickets, uploadTransfer } from "@/composables/Http";
+import { currencyIDR, idrFormat, imageUrl, Loading } from "@/composables/Utils";
 import { OverlayEventDetail } from "@ionic/core/components";
 import Modal from "./components/Modal.vue";
 import {
@@ -89,7 +134,8 @@ import {
   IonCardContent,
   IonModal,
   IonButtons,
-  IonInput,
+  IonImg,
+  IonText
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 
@@ -97,7 +143,8 @@ const isOpen = ref(false);
 const myTickets: any = ref([]);
 
 const selectedTicket = ref<Record<string, unknown>>({});
-
+const preview:any = ref(null);
+const selectedFile:any = ref(null);
 const getTicket = async () => {
   const resp: any = await getMyTickets();
   if (resp.data.code === 200) {
@@ -142,7 +189,7 @@ const onWillDismiss = (ev: CustomEvent<OverlayEventDetail>) => {
 };
 
 const onClickDetail = (tik: Record<string, unknown>) => {
-  console.log(tik);
+  // console.log(tik);
   isOpen.value = true;
   selectedTicket.value = tik;
 };
@@ -156,5 +203,32 @@ const setOpen = (open: boolean) => {
   isOpen.value = open;
 };
 
+
+const onFileSelected = (event: any) => {
+  const file = event.target.files[0];
+  if (file) {
+    selectedFile.value = file;
+
+    // Create a FileReader to read the file
+    const reader = new FileReader();
+    reader.onload = (e:any) => {
+      preview.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const uploadFile = async (id:any) => {
+  await Loading(1000,"Please wait...");
+  if (selectedFile.value) {
+    let resp: any = await uploadTransfer(selectedFile.value ,id );
+    if(resp.data.code == 200)
+  {
+    await getTicket();
+  }
+  } else {
+    console.warn('No file selected!');
+  }
+};
 onMounted(async () => await getTicket());
 </script>
