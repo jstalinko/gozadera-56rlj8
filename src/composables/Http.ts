@@ -180,16 +180,29 @@ export const getOutletById = async (id: Number) => {
 };
 
 /*-------------------------- store reservation -------------------*/
-export const storeRsvp = async(data:any,outlet_id:any,user_id:any,rsvp_date:any,payment_method:any) => {
-  return apiPost(`rsvp-multi` , 
+export const storeRsvp = async (
+  data: any,
+  outlet_id: any,
+  user_id: any,
+  rsvp_date: any,
+  payment_method: any
+) => {
+  return await apiPost(
+    `rsvp-multi`,
     {
       data: data,
       outlet_id: outlet_id,
       user_id: user_id,
       rsvp_date: rsvp_date,
       payment_method: payment_method,
-  },
-  {
-    headers: (await HEADERS()).auth
-  });
+    },
+    {
+      headers: (await HEADERS()).auth,
+    }
+  );
+};
+
+/*------------------------- get my tickets --------------------------*/
+export const getMyTickets = async () => {
+  return await apiGet(`my-ticket`, { headers: (await HEADERS()).auth });
 };

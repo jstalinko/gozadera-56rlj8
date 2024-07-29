@@ -23,9 +23,12 @@
           <b>
             Choose Date
           </b>
-          <ion-datetime-button datetime="datetime" ></ion-datetime-button>
-          <ion-modal :keep-contents-mounted="true" >
-            <ion-datetime id="datetime" v-model="dateSelected"></ion-datetime>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-modal :keep-contents-mounted="true">
+            <ion-datetime id="datetime" v-model="dateSelected" :min="startDate" :max="endDate" locale="en-US"
+              hour-cycle="h24">
+              <span slot="title">Select a Reservation Date</span>
+            </ion-datetime>
           </ion-modal>
           <br>
           <b>
@@ -57,7 +60,8 @@
 
         <ion-card-content>
           <ion-list>
-            <ion-item>Reservation for : {{ dateSelected }}</ion-item>
+            <ion-item>Reservation for : {{ new Date(dateSelected).toDateString() }} at {{ new
+              Date(dateSelected).toLocaleTimeString('en-US', {hour12:false}) }}</ion-item>
             <ion-item v-for="(cart, index) in carts" :key="index">
               <ion-label>
                 {{ getOrdinalSuffix(cart.floor) }} Floor - {{ cart.table }} - {{ cart.max_pax }} Max Pax - {{
@@ -75,31 +79,32 @@
           </ion-item>
 
           <br>
-          <ion-button expand="full"><ion-icon :icon="sendOutline"></ion-icon>&nbsp; Continue</ion-button>
+          <ion-button expand="full" @click="prepareForRsvp"><ion-icon :icon="sendOutline"></ion-icon>&nbsp;
+            Continue</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-content>
   </ion-page>
 </template>
 <script setup lang="ts">
-import { IonPage, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonDatetimeButton, IonModal, IonDatetime, IonSegment, IonSegmentButton, IonLabel, IonButtons, IonButton, IonList, IonItem, IonSelect, IonSelectOption } from '@ionic/vue';
+import { IonPage, IonContent, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonDatetimeButton, IonModal, IonDatetime, IonSegment, IonSegmentButton, IonLabel, IonButtons, IonButton, IonList, IonItem, IonSelect, IonSelectOption, toastController } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
 import { getOutletById, getOutletFloor, getOutletTableFloor, storeRsvp } from '@/composables/Http';
-import { getOrdinalSuffix, imageUrl, currencyIDR } from '@/composables/Utils';
+import { getOrdinalSuffix, imageUrl, currencyIDR, Loading } from '@/composables/Utils';
 import { getStore } from '@/composables/storage';
 import { sendOutline } from 'ionicons/icons';
 
 const route = useRoute();
 const outlet_id: any = ref(route.params.id);
-const outlet_details:any = ref([]);
+const outlet_details: any = ref([]);
 const floorSelected: any = ref('1');
 const tableSelected: any = ref([]);
 const floors: any = ref([]);
 const tables: any = ref([]);
 const startDate: any = ref(route.query.startDate);
 const endDate: any = ref(route.query.endDate);
-const dateSelected: any = ref('');
+const dateSelected: any = ref(startDate.value);
 const payment_method = ref('transfer');
 const carts: any = ref([]);
 watch(floorSelected, async () => await getOutletTableFloor(outlet_id.value, floorSelected.value, startDate.value));
@@ -110,7 +115,7 @@ const outletDetail = async () => {
 }
 
 const selectTable = (data: any, table: any, floor: any) => {
-  let item: any = carts.value.find((item:any) => item.id == table);
+  let item: any = carts.value.find((item: any) => item.id == table);
   if (!item) {
     carts.value.push({
       id: data.id,
@@ -124,16 +129,34 @@ const selectTable = (data: any, table: any, floor: any) => {
 
   }
 
-  console.log(carts.value);
+  // console.log(carts.value);
 };
 
 
 const prepareForRsvp = async () => {
-
-  let user_id = getStore("_id");
+  await Loading(1000, "Please wait...");
+  let user_id = await getStore("_id");
   let data = JSON.stringify(carts.value);
   let resp: any = await storeRsvp(data, outlet_id.value, user_id, dateSelected.value, payment_method.value)
-  console.log(resp);
+  let toastConfig:any;
+  if (resp.data.code === 200) {
+    toastConfig = {
+      message: "Your reservation processed!",
+      duration: 1500,
+      position: "bottom",
+      color: "success",
+    };
+    window.location.href="/home/my-tickets";
+    
+  }else{
+    toastConfig = {
+      message: "Server Error,please try again later.",
+      duration: 1500,
+      position: "bottom",
+      color: "danger",
+    };
+  }
+  (await toastController.create(toastConfig)).present();
 
 };
 const getFloor = async () => {
