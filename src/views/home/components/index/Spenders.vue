@@ -20,7 +20,7 @@
                 </ion-badge>
                 <ion-label>
                   {{ item.username }}
-                  <sub>{{ currencyFormat(Number(item.total_payment)) }} K</sub>
+                 
                 </ion-label>
                 <ion-badge
                   slot="end"
