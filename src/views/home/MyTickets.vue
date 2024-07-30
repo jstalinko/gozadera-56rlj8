@@ -37,7 +37,7 @@
         <ion-button fill="clear" :href="'/home/rsvp-detail/'+tik.id">RSVP Detail</ion-button>
       </ion-card>
       <!-- show payment detail and rsvp datail -->
-      <ion-modal :is-open="isOpen">
+      <ion-modal :is-open="isOpen" :initial-breakpoint="0.9">
         <ion-header>
           <ion-toolbar>
             <ion-buttons slot="start">
@@ -223,7 +223,7 @@ const onFileSelected = (event: any) => {
 const uploadFile = async (id:any) => {
   await Loading(1000,"Please wait...");
   if (selectedFile.value) {
-    let resp: any = await uploadTransfer(selectedFile.value ,id );
+    const resp: any = await uploadTransfer(selectedFile.value ,id );
     if(resp.data.code == 200)
   {
     await getTicket();
