@@ -19,13 +19,13 @@ h6 {
 .flex-col {
   flex-direction: column;
 }
-.justify-between{
+.justify-between {
   justify-content: space-between;
 }
 .flex-wrap {
   flex-wrap: wrap;
 }
-.mt-header{
+.mt-header {
   margin-top: 26px !important;
 }
 .mt-40 {
@@ -78,4 +78,8 @@ h6 {
         0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
     }
   }
+}
+
+body {
+  margin-top: 12px;
 }
