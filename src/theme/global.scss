@@ -84,6 +84,10 @@ body {
   margin-top: 12px;
 }
 
-// ion-tab-bar {
-//   margin-bottom: calc(7px + env(safe-area-inset-top));
-// }
+ion-tab-bar {
+  margin-bottom: 14px;
+}
+
+ion-modal {
+  margin-top: 36px;
+}
