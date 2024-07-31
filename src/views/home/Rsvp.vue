@@ -49,15 +49,18 @@
 
           <br />
           <b> Choose Table(s) </b>
-          <ion-buttons slot="start">
+          <ion-grid>
+            <ion-col size="3">
             <ion-button
               v-for="(tbl, index) in tables"
               :key="index"
               @click="selectTable(tbl, tbl.id, floorSelected)"
               :fill="carts.find((a: any) => a?.id == tbl.id) ? 'solid' : 'outline'"
+              
               >{{ tbl.code }}</ion-button
             >
-          </ion-buttons>
+          </ion-col>
+          </ion-grid>
         </ion-card-content>
       </ion-card>
 
@@ -121,7 +124,8 @@ import {
   IonItem,
   IonSelect,
   IonSelectOption,
-  toastController
+  toastController,
+  IonIcon
 } from "@ionic/vue";
 import { useRoute } from "vue-router";
 import { computed, onMounted, ref, watch } from "vue";
@@ -149,13 +153,14 @@ const payment_method = ref('transfer');
 const carts: any = ref([]);
 watch(
   floorSelected,
-  async () =>
-    await getOutletTableFloor(
-      outlet_id.value,
-      floorSelected.value,
-      startDate.value
-    )
-);
+  async () =>{
+    await Loading(1400,"Load data...")
+    await getTables()
+});
+watch(dateSelected,async() =>{
+  await Loading(1200,"Load data...");
+  await getTables();
+});
 
 const outletDetail = async () => {
   const resp: any = await getOutletById(outlet_id.value);
@@ -215,13 +220,14 @@ const getTables = async () => {
   const resp: any = await getOutletTableFloor(
     outlet_id.value,
     floorSelected.value,
-    startDate.value
+    dateSelected.value
   );
   if (resp.data.code === 200) {
     tables.value = resp.data.data;
   }
 };
 onMounted(async () => {
+  await Loading(1400, "Please wait...");
   await outletDetail();
   await getFloor();
   await getTables();

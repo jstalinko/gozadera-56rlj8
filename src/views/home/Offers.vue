@@ -81,7 +81,8 @@
 
           <ion-card-content>
             {{ event.description }}
-            <ion-button expand="block" :color="badgeColor[event.status]" :href="(event.status !== 'finished') ? '/home/outlet/'+event.outlet_id : '/home/gallery/'+event.id">
+           <div v-if="category === 'event'">
+            <ion-button expand="block" :color="badgeColor[event.status]" :href="(event.status !== 'finished') ? '/home/outlet/'+event.outlet_id+'?'+httpBuildQuery({startDate: new Date(event.start_date).toISOString() , endDate: new Date(event.end_date).toISOString()}) : '/home/gallery/'+event.id">
               <span
                 v-if="event.status == 'upcoming' || event.status == 'ongoing'"
               >
@@ -91,6 +92,7 @@
                 <ion-icon :icon="imageOutline"></ion-icon> Gallery
               </span>
             </ion-button>
+           </div>
           </ion-card-content>
         </ion-card>
       </div>
@@ -101,7 +103,7 @@
 <script setup lang="ts">
 import NoData from "@/components/NoData.vue";
 import { getEvent } from "@/composables/Http";
-import { imageUrl, Loading } from "@/composables/Utils";
+import { httpBuildQuery, imageUrl, Loading } from "@/composables/Utils";
 import { HttpResponse } from "@capacitor/core";
 import {
   IonPage,

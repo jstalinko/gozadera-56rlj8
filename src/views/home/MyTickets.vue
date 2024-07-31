@@ -276,17 +276,31 @@ const uploadFile = async (id: any) => {
       await getTicket();
 
       toastConfig = {
-        message: "Success! New password send in whatsapp number.",
+        message: "Success! Proof transaction uploaded!",
         duration: 1500,
         position: "bottom",
         color: "success",
       };
-      const toast = await toastController.create(toastConfig);
-      await toast.present();
+    }else{
+      toastConfig = {
+        message: "Failed! Upload image, "+resp.data.message,
+        duration: 1500,
+        position: "bottom",
+        color: "error",
+      };
     }
+
   } else {
-    console.warn("No file selected!");
+    toastConfig = {
+        message: "Error! Please select image first",
+        duration: 1500,
+        position: "bottom",
+        color: "error",
+      };
   }
+  const toast = await toastController.create(toastConfig);
+  await toast.present();
+  isOpen.value = false;
 };
 
 onMounted(async () => await getTicket());
