@@ -152,12 +152,6 @@
           <div style="margin: 10%">&nbsp;</div>
         </ion-content>
       </ion-modal>
-      <ion-toast
-        :is-open="showToast"
-        message="Success upload file!"
-        :duration="5000"
-        @didDismiss="setToast(false)"
-      ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
@@ -186,7 +180,8 @@ import {
   IonButtons,
   IonImg,
   IonText,
-  IonToast,
+  toastController,
+  ToastOptions,
 } from "@ionic/vue";
 import { markRaw, onMounted, ref } from "vue";
 import NoData from "@/components/NoData.vue";
@@ -195,6 +190,8 @@ const pageDetail = markRaw(RsvpDetail);
 const showToast = ref(false);
 const isOpen = ref(false);
 const myTickets: any = ref([]);
+
+let toastConfig: ToastOptions = {};
 
 const selectedTicket: any = ref<Record<string, unknown>>({});
 const preview: any = ref(null);
@@ -257,10 +254,6 @@ const setOpen = (open: boolean) => {
   isOpen.value = open;
 };
 
-const setToast = (open: boolean) => {
-  showToast.value = open;
-};
-
 const onFileSelected = (event: any) => {
   const file = event.target.files[0];
   if (file) {
@@ -281,12 +274,21 @@ const uploadFile = async (id: any) => {
     const resp: any = await uploadTransfer(selectedFile.value, id);
     if (resp.data.code == 200) {
       await getTicket();
-      showToast.value = true;
+
+      toastConfig = {
+        message: "Success! New password send in whatsapp number.",
+        duration: 1500,
+        position: "bottom",
+        color: "success",
+      };
+      const toast = await toastController.create(toastConfig);
+      await toast.present();
     }
   } else {
     console.warn("No file selected!");
   }
 };
+
 onMounted(async () => await getTicket());
 </script>
 
