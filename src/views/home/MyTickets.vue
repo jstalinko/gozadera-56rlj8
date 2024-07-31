@@ -6,9 +6,16 @@
           <ion-title> My Tickets </ion-title>
         </ion-toolbar>
       </ion-header>
-      <NoData :message="'No tickets! Make reservation first..'" />
+      <NoData
+        v-if="myTickets.length == 0"
+        :message="'No tickets! Make reservation first..'"
+      />
 
-      <ion-card v-for="(tik, index) in myTickets" :key="index" v-if="myTickets.length > 0">
+      <ion-card
+        v-for="(tik, index) in myTickets"
+        :key="index"
+        v-if="myTickets.length > 0"
+      >
         <ion-card-header>
           <div class="flex justify-between">
             <ion-card-subtitle>#{{ tik.invoice }}</ion-card-subtitle>
@@ -34,26 +41,39 @@
             </ion-item>
           </ion-list>
         </ion-card-content>
-        <ion-button fill="clear" @click="onClickDetail(tik)">Payment Detail</ion-button>
-        <ion-nav-link router-direction="forward" :component="pageDetail" :component-props="{id: tik.id}">
+        <ion-button fill="clear" @click="onClickDetail(tik)"
+          >Payment Detail</ion-button
+        >
+        <ion-nav-link
+          router-direction="forward"
+          :component="pageDetail"
+          :component-props="{ id: tik.id }"
+        >
           <ion-button fill="clear">Rsvp Detail</ion-button>
         </ion-nav-link>
       </ion-card>
       <!-- show payment detail and rsvp datail -->
-      <ion-modal :is-open="isOpen" :initial-breakpoint="0.9">
+      <ion-modal :is-open="isOpen">
         <ion-header>
           <ion-toolbar>
             <ion-buttons slot="start">
               <ion-button @click="setOpen(false)">Cancel</ion-button>
             </ion-buttons>
             <ion-title>Payment Detail</ion-title>
-            <ion-buttons slot="end">
-              <ion-button :strong="true" @click="confirm(selectedTicket.id)">Detail</ion-button>
-            </ion-buttons>
+            <!-- <ion-buttons slot="end">
+              <ion-nav-link
+                router-direction="forward"
+                :component="pageDetail"
+                :component-props="{ id: selectedTicket.id }"
+              >
+                <ion-button fill="clear">Detail</ion-button>
+              </ion-nav-link>
+            </ion-buttons> -->
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <b>#{{ selectedTicket.invoice }}</b><br>
+          <b>#{{ selectedTicket.invoice }}</b
+          ><br />
 
           <ion-list>
             <ion-item>
@@ -68,60 +88,83 @@
             </ion-item>
             <ion-item>
               <ion-label>
-                Status : <span v-html="statusUi(selectedTicket.payment_status)"></span>
+                Status :
+                <span v-html="statusUi(selectedTicket.payment_status)"></span>
               </ion-label>
             </ion-item>
             <ion-item>
               <ion-label>
-                Payment Method : {{ selectedTicket.payment_method.toUpperCase() }}
-                
+                Payment Method :
+                {{ selectedTicket.payment_method.toUpperCase() }}
               </ion-label>
             </ion-item>
-
           </ion-list>
-          <br>
-          <b>Payment Destination</b><br><br>
-          <ion-text v-for="(p, i) in selectedTicket.payments" :key="i"
-            v-if="selectedTicket.payment_method == 'transfer'">
-           <br> Transfer to : <br><br>
-            <b><i>{{ p.account_number }} a/n {{ p.account_name }}</i></b> ( {{ p.bank_name }})
+          <br />
+          <b>Payment Destination</b><br /><br />
+          <ion-text
+            v-for="(p, i) in selectedTicket.payments"
+            :key="i"
+            v-if="selectedTicket.payment_method == 'transfer'"
+          >
+            <br />
+            Transfer to : <br /><br />
+            <b
+              ><i>{{ p.account_number }} a/n {{ p.account_name }}</i></b
+            >
+            ( {{ p.bank_name }})
           </ion-text>
 
-          <div v-if="selectedTicket.payment_method == 'qris'" v-for="(p2, i2) in selectedTicket.payments" :key="i2">
-            <ion-img :src="imageUrl(p2.qris_image)"></ion-img><br>
+          <div
+            v-if="selectedTicket.payment_method == 'qris'"
+            v-for="(p2, i2) in selectedTicket.payments"
+            :key="i2"
+          >
+            <ion-img :src="imageUrl(p2.qris_image)"></ion-img><br />
             <p>{{ p2.account_name }} | Scan QRIS Here</p>
-
           </div>
 
-          <br><br>
+          <br /><br />
           <div v-if="selectedTicket.proof_transfer == null">
-            <p>Upload proof transaction:</p><br>
+            <p>Upload proof transaction:</p>
+            <br />
             <form @submit.prevent="uploadFile(selectedTicket.id)">
               <ion-item>
                 <ion-label position="stacked">Select File</ion-label>
                 <input type="file" @change="onFileSelected" />
               </ion-item>
-              <ion-item v-if="preview"><br>
-                <img :src="preview" alt="Image Preview" style="max-width: 100%; max-height: 200px;" />
+              <ion-item v-if="preview"
+                ><br />
+                <img
+                  :src="preview"
+                  alt="Image Preview"
+                  style="max-width: 100%; max-height: 200px"
+                />
               </ion-item>
               <ion-button type="submit" expand="full">Upload</ion-button>
             </form>
           </div>
           <div v-else>
             <b>Proof transfer :</b>
-            <ion-img :src="imageUrl(selectedTicket.proof_transfer.image)"></ion-img>
+            <ion-img
+              :src="imageUrl(selectedTicket.proof_transfer.image)"
+            ></ion-img>
           </div>
-
+          <div style="margin: 10%">&nbsp;</div>
         </ion-content>
       </ion-modal>
-
+      <ion-toast
+        :is-open="showToast"
+        message="Success upload file!"
+        :duration="5000"
+        @didDismiss="setToast(false)"
+      ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { getMyTickets, uploadTransfer } from "@/composables/Http";
-import { currencyIDR, idrFormat, imageUrl, Loading } from "@/composables/Utils";
+import { currencyIDR, imageUrl, Loading } from "@/composables/Utils";
 import { OverlayEventDetail } from "@ionic/core/components";
 import RsvpDetail from "./RsvpDetail.vue";
 import {
@@ -142,12 +185,14 @@ import {
   IonModal,
   IonButtons,
   IonImg,
-  IonText
+  IonText,
+  IonToast,
 } from "@ionic/vue";
 import { markRaw, onMounted, ref } from "vue";
 import NoData from "@/components/NoData.vue";
 
 const pageDetail = markRaw(RsvpDetail);
+const showToast = ref(false);
 const isOpen = ref(false);
 const myTickets: any = ref([]);
 
@@ -205,14 +250,16 @@ const onClickDetail = (tik: Record<string, unknown>) => {
 };
 
 const confirm = (id: any) => {
-  window.location.href = '/home/rsvp-detail/' + id;
+  window.location.href = "/home/rsvp-detail/" + id;
 };
 
 const setOpen = (open: boolean) => {
-  console.log("setOpen");
   isOpen.value = open;
 };
 
+const setToast = (open: boolean) => {
+  showToast.value = open;
+};
 
 const onFileSelected = (event: any) => {
   const file = event.target.files[0];
@@ -234,10 +281,17 @@ const uploadFile = async (id: any) => {
     const resp: any = await uploadTransfer(selectedFile.value, id);
     if (resp.data.code == 200) {
       await getTicket();
+      showToast.value = true;
     }
   } else {
-    console.warn('No file selected!');
+    console.warn("No file selected!");
   }
 };
 onMounted(async () => await getTicket());
 </script>
+
+<style lang="scss" scoped>
+ion-modal {
+  padding-top: 10%;
+}
+</style>
