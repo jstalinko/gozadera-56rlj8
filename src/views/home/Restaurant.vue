@@ -88,6 +88,9 @@
                   }}</ion-card-subtitle
                 >
               </ion-card-header>
+              <ion-card-content v-if="pr.price !== 0 || pr.price > 1">
+                <ion-badge>{{ currencyIDR(pr.price) }}</ion-badge>
+              </ion-card-content>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -98,6 +101,8 @@
 
 <script setup lang="ts">
 import {
+  IonCardContent,
+  IonBadge,
   IonPage,
   IonHeader,
   IonToolbar,
@@ -117,7 +122,7 @@ import {
 } from "@ionic/vue";
 import { ref, onMounted } from "vue";
 import { getProductByCategory } from "@/composables/Http";
-import { imageUrl, Loading } from "@/composables/Utils";
+import { currencyIDR, imageUrl, Loading } from "@/composables/Utils";
 
 const filterCategory = ref("food");
 const filterSubCategory = ref("");

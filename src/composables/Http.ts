@@ -224,5 +224,25 @@ export const uploadTransfer = async(files:any,rsvp_id: any) => {
 
 /*-------------------------- rsvp detail ---------------------------------*/
 export const getRsvpDetail = async(id: Number) => {
-  return apiGet(`rsvp-detail/${id}` , {headers: (await HEADERS()).auth});
+  return await apiGet(`rsvp-detail/${id}` , {headers: (await HEADERS()).auth});
+}
+
+/*--------------------------- update profile -----------------------------*/
+export const setUpdateProfile = async(updatedProfile: any) => {
+  return await apiPost(`update-profile` , {
+      username: updatedProfile.username,
+      email: updatedProfile.email,
+      phone: updatedProfile.phone,
+      address: updatedProfile.address,
+      newPassword: updatedProfile.newPassword,
+      currentPassword: updatedProfile.currentPassword,
+  },{headers: (await HEADERS()).auth});
+}
+
+/*------------------------------- upload photo -------------------------*/
+export const uploadProfile = async(image: any) => {
+  var formData = new FormData();
+  formData.append('image',image);
+  let resp: any = await apiPost(`upload-profile` , formData, {headers:(await HEADERS()).auth});
+  return resp;
 }

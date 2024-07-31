@@ -64,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "profile",
-        component: () => import("@/views/home/Profile.vue"),
+        component: () => import("@/views/home/Navigation/Profile.Nav.vue"),
       },
       {
         path: "my-bottles",
@@ -72,7 +72,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "my-tickets",
-        component: () => import("@/views/home/MyTickets.vue"),
+        component: () => import("@/views/home/Navigation/MyTickets.Nav.vue"),
       },
       {
         path: "outlets",

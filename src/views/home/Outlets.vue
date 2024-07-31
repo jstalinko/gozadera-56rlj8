@@ -60,6 +60,7 @@
           </ion-grid>
         </ion-card-content>
         <ion-button
+          v-if="isRsvp"
           expand="block"
           :href="'/home/outlet/' + out.id + '?' + httpBuildQuery(dateParams)"
           ><ion-icon :icon="mailOutline"></ion-icon>&nbsp;
@@ -99,6 +100,7 @@ import {
 import { getOutlets } from "@/composables/Http";
 import { onMounted, ref } from "vue";
 import { httpBuildQuery, Loading } from "@/composables/Utils";
+import { useRoute } from "vue-router";
 const dateParams = ref({
   startDate: new Date().toISOString(),
   endDate: new Date(
@@ -106,6 +108,8 @@ const dateParams = ref({
   ).toISOString(),
 });
 const outlets: any = ref([]);
+const route = useRoute();
+const isRsvp = ref(route.query.rsvp);
 const dataOutlets = async () => {
   await Loading(1000, "Please wait ...");
   const resp: any = await getOutlets();
