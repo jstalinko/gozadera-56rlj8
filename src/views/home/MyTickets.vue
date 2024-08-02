@@ -9,6 +9,9 @@
 
       <div class="ion-padding" style="margin-top: 20px">
         <ion-segment value="buttons" v-model="activeFilter">
+          <ion-segment-button value="today">
+            <ion-label>Today</ion-label>
+          </ion-segment-button>
           <ion-segment-button value="30day">
             <ion-label>Last 30 Days</ion-label>
           </ion-segment-button>
@@ -16,7 +19,7 @@
             <ion-label>Last 90 Days</ion-label>
           </ion-segment-button>
           <ion-segment-button value="all">
-            <ion-label>All Tickets</ion-label>
+            <ion-label>All </ion-label>
           </ion-segment-button>
         </ion-segment>
         <br />
@@ -202,7 +205,7 @@ import {
   IonSegment,
   IonSegmentButton
 } from "@ionic/vue";
-import { markRaw, onMounted, ref } from "vue";
+import { markRaw, onMounted, ref,watch } from "vue";
 import NoData from "@/components/NoData.vue";
 
 const pageDetail = markRaw(RsvpDetail);
@@ -216,6 +219,8 @@ let toastConfig: ToastOptions = {};
 const selectedTicket: any = ref<Record<string, unknown>>({});
 const preview: any = ref(null);
 const selectedFile: any = ref(null);
+
+watch(activeFilter , async() => await getTicket());
 const getTicket = async () => {
   await Loading(1500, "Please wait...");
   const resp: any = await getMyTickets(activeFilter.value);
