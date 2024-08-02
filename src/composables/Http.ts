@@ -203,8 +203,8 @@ export const storeRsvp = async (
 };
 
 /*------------------------- get my tickets --------------------------*/
-export const getMyTickets = async () => {
-  return await apiGet(`my-ticket`, { headers: (await HEADERS()).auth });
+export const getMyTickets = async (filter: any) => {
+  return await apiGet(`my-ticket?filter=`+filter, { headers: (await HEADERS()).auth });
 };
 
 /*------------------------- get gallery -----------------------------*/

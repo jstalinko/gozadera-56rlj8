@@ -6,6 +6,23 @@
           <ion-title> My Tickets </ion-title>
         </ion-toolbar>
       </ion-header>
+
+      <div class="ion-padding" style="margin-top: 20px">
+        <ion-segment value="buttons" v-model="activeFilter">
+          <ion-segment-button value="30day">
+            <ion-label>Last 30 Days</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="90day">
+            <ion-label>Last 90 Days</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="all">
+            <ion-label>All Tickets</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <br />
+      </div>
+
+
       <NoData
         v-if="myTickets.length == 0"
         :message="'No tickets! Make reservation first..'"
@@ -182,6 +199,8 @@ import {
   IonText,
   toastController,
   ToastOptions,
+  IonSegment,
+  IonSegmentButton
 } from "@ionic/vue";
 import { markRaw, onMounted, ref } from "vue";
 import NoData from "@/components/NoData.vue";
@@ -190,6 +209,7 @@ const pageDetail = markRaw(RsvpDetail);
 const showToast = ref(false);
 const isOpen = ref(false);
 const myTickets: any = ref([]);
+const activeFilter:any  = ref('30day');
 
 let toastConfig: ToastOptions = {};
 
@@ -198,7 +218,7 @@ const preview: any = ref(null);
 const selectedFile: any = ref(null);
 const getTicket = async () => {
   await Loading(1500, "Please wait...");
-  const resp: any = await getMyTickets();
+  const resp: any = await getMyTickets(activeFilter.value);
   if (resp.data.code === 200) {
     myTickets.value = resp.data.data;
   }
