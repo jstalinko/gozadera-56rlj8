@@ -1,5 +1,6 @@
 <template>
-    <ion-header collapse="condense">
+   
+   <ion-header collapse="condense" class="ion-padding ion-margin">
         <ion-toolbar>
             <ion-buttons slot="start">
                 <ion-back-button></ion-back-button>
@@ -8,7 +9,6 @@
         </ion-toolbar>
     </ion-header>
     <ion-page>
-
 
         <ion-content class="ion-padding ion-margin"><br><br>
             <ion-list class="ion-margin">
