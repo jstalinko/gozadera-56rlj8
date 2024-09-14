@@ -56,7 +56,7 @@ const offers = ref([
 <style lang="scss" scoped>
 ion-img {
   &::part(image) {
-    box-shadow: 0px 0px 4px 4px #d49000;
+    box-shadow: 0px 0px 4px 4px #AB9365;
     border-radius: 10px;
   }
 }
@@ -96,7 +96,7 @@ ion-col {
         border: solid 1px #ffffff;
       }
       .content:hover{
-        background-color: rgba(207,137,1,0.86);
+        background-color: #AB9365;
         color:#000;
         border:solid 1px #000;
       }
